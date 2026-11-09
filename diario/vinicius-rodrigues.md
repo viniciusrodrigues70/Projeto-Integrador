@@ -1,0 +1,1 @@
+>> No dia 09/11/2026 eu realizei a estruturação dos arquivos e das pastas, visando organizar o projeto
