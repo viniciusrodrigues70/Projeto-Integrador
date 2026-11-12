@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | Banco Solidário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div><h2>Banco Solidário</h2><small>Gestão de alimentos</small></div>
+        </div>
+
+        <p class="nav-title">Menu principal</p>
+
+        <nav class="nav">
+            <a href="dashboard.html"><span class="nav-icon">⌂</span> Dashboard</a>
+            <a href="doadores.html"><span class="nav-icon">♡</span> Doadores</a>
+            <a href="produtos.html" class="active"><span class="nav-icon">▦</span> Produtos</a>
+            <a href="familias.html"><span class="nav-icon">♧</span> Famílias</a>
+            <a href="estoque.html"><span class="nav-icon">▤</span> Estoque</a>
+            <a href="entregas.html"><span class="nav-icon">⇧</span> Entregas</a>
+        </nav>
+
+        <div class="sidebar-footer">Banco de Alimentos<br>Portal Administrativo</div>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <span class="breadcrumb">Banco Solidário / Produtos</span>
+            <div class="profile">
+                <div class="avatar">AD</div>
+                <div><strong>Administrador</strong><small>Área administrativa</small></div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <div class="eyebrow">Gerenciamento de cadastros</div>
+                <h1>Produtos</h1>
+                <p>Gerencie os alimentos disponíveis para recebimento e distribuição.</p>
+            </div>
+
+            <div class="stats">
+                <div class="card">
+                    <span class="stat-label">Produtos cadastrados</span>
+                    <strong class="stat-number">36</strong>
+                    <span class="stat-description">Tipos de alimentos</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Categorias</span>
+                    <strong class="stat-number">06</strong>
+                    <span class="stat-description">Classificações de produtos</span>
+                </div>
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Produtos cadastrados</h2>
+                        <p>Lista de alimentos registrados no sistema.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search">
+                        <input type="search" placeholder="Buscar produto...">
+                    </div>
+                    <a href="#cadastro" class="btn">+ Novo produto</a>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Peso</th>
+                                <th>Categoria</th>
+                                <th>Quantidade</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>Arroz tipo 1</td>
+                                <td>Arroz branco</td>
+                                <td>1 kg</td>
+                                <td>Grãos</td>
+                                <td>180</td>
+                            </tr>
+
+                            <tr>
+                                <td>002</td>
+                                <td>Feijão carioca</td>
+                                <td>Feijão tipo 1</td>
+                                <td>1 kg</td>
+                                <td>Grãos</td>
+                                <td>125</td>
+                            </tr>
+
+                            <tr>
+                                <td>003</td>
+                                <td>Óleo de soja</td>
+                                <td>Óleo vegetal</td>
+                                <td>900 ml</td>
+                                <td>Óleos</td>
+                                <td>74</td>
+                            </tr>
+
+                            <tr>
+                                <td>004</td>
+                                <td>Leite em pó</td>
+                                <td>Leite integral</td>
+                                <td>400 g</td>
+                                <td>Laticínios</td>
+                                <td>52</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="form-card" id="cadastro">
+
+                <h2>Cadastrar novo produto</h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="nome">Nome do produto</label>
+                        <input type="text" id="nome" placeholder="Nome do alimento">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria">
+                            <option>Selecione uma categoria</option>
+                            <option>Grãos</option>
+                            <option>Massas</option>
+                            <option>Laticínios</option>
+                            <option>Óleos</option>
+                            <option>Enlatados</option>
+                            <option>Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descricao">Descrição</label>
+                        <input type="text" id="descricao" placeholder="Descrição do alimento">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="peso">Peso / Unidade de medida</label>
+                        <input type="text" id="peso" placeholder="Ex.: 1 kg ou 900 ml">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantidade">Quantidade</label>
+                        <input type="number" id="quantidade" placeholder="Quantidade">
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <a href="produtos.html" class="btn btn-secondary">Cancelar</a>
+                    <button type="button" class="btn">Salvar produto</button>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

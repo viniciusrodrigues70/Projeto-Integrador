@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Banco Solidário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div>
+                <h2>Banco Solidário</h2>
+                <small>Gestão de alimentos</small>
+            </div>
+        </div>
+
+        <p class="nav-title">Menu principal</p>
+
+        <nav class="nav">
+            <a href="dashboard.html" class="active"><span class="nav-icon">⌂</span> Dashboard</a>
+            <a href="doadores.html"><span class="nav-icon">♡</span> Doadores</a>
+            <a href="produtos.html"><span class="nav-icon">▦</span> Produtos</a>
+            <a href="familias.html"><span class="nav-icon">♧</span> Famílias</a>
+            <a href="estoque.html"><span class="nav-icon">▤</span> Estoque</a>
+            <a href="entregas.html"><span class="nav-icon">⇧</span> Entregas</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            Banco de Alimentos
+            <br>
+            Portal Administrativo
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <span class="breadcrumb">Banco Solidário / Dashboard</span>
+
+            <div class="profile">
+                <div class="avatar">AD</div>
+                <div>
+                    <strong>Administrador</strong>
+                    <small>Área administrativa</small>
+                </div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <div class="eyebrow">Visão geral</div>
+                <h1>Dashboard</h1>
+                <p>
+                    Acompanhe os principais indicadores
+                    e movimentações do Banco Solidário.
+                </p>
+            </div>
+
+            <div class="stats">
+
+                <div class="card">
+                    <span class="stat-label">Famílias cadastradas</span>
+                    <strong class="stat-number">248</strong>
+                    <span class="stat-description">Famílias beneficiárias</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Doadores cadastrados</span>
+                    <strong class="stat-number">32</strong>
+                    <span class="stat-description">Pessoas e instituições</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Produtos cadastrados</span>
+                    <strong class="stat-number">36</strong>
+                    <span class="stat-description">Tipos de alimentos</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Entregas no mês</span>
+                    <strong class="stat-number">86</strong>
+                    <span class="stat-description">Cestas registradas</span>
+                </div>
+
+            </div>
+
+            <div class="grid-2">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h2>Movimentações recentes</h2>
+                            <p>Registros de entrada e distribuição</p>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tipo</th>
+                                    <th>Descrição</th>
+                                    <th>Data</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><span class="status">Doação</span></td>
+                                    <td>40 pacotes de arroz</td>
+                                    <td>11/11/2026</td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="status warning">Entrega</span></td>
+                                    <td>Família Maria Oliveira</td>
+                                    <td>10/11/2026</td>
+                                </tr>
+
+                                <tr>
+                                    <td><span class="status">Doação</span></td>
+                                    <td>25 pacotes de feijão</td>
+                                    <td>09/11/2026</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <div>
+                            <h2>Controle de validade</h2>
+                            <p>Acompanhamento dos lotes</p>
+                        </div>
+                    </div>
+
+                    <strong class="stat-number">08</strong>
+
+                    <p style="color:var(--muted);font-size:12px;margin-bottom:15px;">
+                        Lotes próximos do vencimento.
+                    </p>
+
+                    <span class="status warning">Atenção necessária</span>
+
+                    <br><br>
+
+                    <a href="estoque.html" class="btn btn-light">
+                        Consultar estoque →
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Acesso rápido</h2>
+                        <p>Principais áreas do sistema</p>
+                    </div>
+                </div>
+
+                <div class="report-grid">
+
+                    <div class="report-card">
+                        <h3>Doadores</h3>
+                        <p>Consulte e cadastre os responsáveis pelas doações.</p>
+                        <a href="doadores.html" class="btn btn-light">Acessar</a>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>Estoque</h3>
+                        <p>Consulte produtos, lotes e datas de validade.</p>
+                        <a href="estoque.html" class="btn btn-light">Acessar</a>
+                    </div>
+
+                    <div class="report-card">
+                        <h3>Entregas</h3>
+                        <p>Registre e consulte as entregas às famílias.</p>
+                        <a href="entregas.html" class="btn btn-light">Acessar</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

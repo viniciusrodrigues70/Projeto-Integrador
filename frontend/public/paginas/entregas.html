@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entregas | Banco Solidário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div><h2>Banco Solidário</h2><small>Gestão de alimentos</small></div>
+        </div>
+
+        <p class="nav-title">Menu principal</p>
+
+        <nav class="nav">
+            <a href="dashboard.html"><span class="nav-icon">⌂</span> Dashboard</a>
+            <a href="doadores.html"><span class="nav-icon">♡</span> Doadores</a>
+            <a href="produtos.html"><span class="nav-icon">▦</span> Produtos</a>
+            <a href="familias.html"><span class="nav-icon">♧</span> Famílias</a>
+            <a href="estoque.html"><span class="nav-icon">▤</span> Estoque</a>
+            <a href="entregas.html" class="active"><span class="nav-icon">⇧</span> Entregas</a>
+        </nav>
+
+        <div class="sidebar-footer">Banco de Alimentos<br>Portal Administrativo</div>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <span class="breadcrumb">Banco Solidário / Entregas</span>
+            <div class="profile">
+                <div class="avatar">AD</div>
+                <div><strong>Administrador</strong><small>Área administrativa</small></div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <div class="eyebrow">Distribuição de alimentos</div>
+                <h1>Entregas de Cestas</h1>
+                <p>Registre a distribuição de alimentos e acompanhe o histórico das famílias beneficiadas.</p>
+            </div>
+
+            <div class="stats">
+
+                <div class="card">
+                    <span class="stat-label">Entregas realizadas</span>
+                    <strong class="stat-number">86</strong>
+                    <span class="stat-description">Durante este mês</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Famílias atendidas</span>
+                    <strong class="stat-number">86</strong>
+                    <span class="stat-description">Neste mês</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Famílias cadastradas</span>
+                    <strong class="stat-number">248</strong>
+                    <span class="stat-description">Total de beneficiários</span>
+                </div>
+
+            </div>
+
+            <div class="grid-2">
+
+                <div class="form-card">
+
+                    <h2>Registrar nova entrega</h2>
+
+                    <div class="form-grid">
+
+                        <div class="form-group full">
+                            <label for="familia">Família beneficiária</label>
+                            <select id="familia">
+                                <option>Selecione a família</option>
+                                <option>Maria Oliveira</option>
+                                <option>José Santos</option>
+                                <option>Ana Costa</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="data">Data da entrega</label>
+                            <input type="date" id="data">
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="produto">Produto</label>
+                            <select id="produto">
+                                <option>Selecione o produto</option>
+                                <option>Arroz tipo 1</option>
+                                <option>Feijão carioca</option>
+                                <option>Óleo de soja</option>
+                                <option>Leite em pó</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="quantidade">Quantidade entregue</label>
+                            <input type="number" id="quantidade" placeholder="Informe a quantidade">
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="observacao">Observações</label>
+                            <textarea id="observacao" placeholder="Informações adicionais sobre a entrega"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary">Cancelar</button>
+                        <button type="button" class="btn">Registrar entrega</button>
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <h2>Informações da família</h2>
+                                <p>Dados da família beneficiária.</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Responsável</label>
+                            <input type="text" value="Maria Oliveira" readonly>
+                        </div>
+
+                        <div class="form-group" style="margin-top:15px;">
+                            <label>Número de integrantes</label>
+                            <input type="text" value="4 integrantes" readonly>
+                        </div>
+
+                        <div class="form-group" style="margin-top:15px;">
+                            <label>Última entrega</label>
+                            <input type="text" value="05/11/2026" readonly>
+                        </div>
+
+                        <br>
+
+                        <span class="status">Cadastro existente</span>
+
+                    </div>
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+                            <div>
+                                <h2>Regras de distribuição</h2>
+                                <p>Critérios para realizar as entregas.</p>
+                            </div>
+                        </div>
+
+                        <div class="notice">
+                            Cada família poderá receber, inicialmente,
+                            uma cesta por mês, respeitando o limite
+                            configurado pela instituição.
+                        </div>
+
+                        <p style="font-size:11px;line-height:2;color:var(--muted);">
+                            • Verificar a disponibilidade dos alimentos.<br>
+                            • Não utilizar produtos vencidos.<br>
+                            • Priorizar lotes com validade mais próxima.<br>
+                            • Registrar a entrega e a baixa no estoque juntas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Histórico de entregas</h2>
+                        <p>Consulte os registros de distribuição realizados.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+
+                    <div class="search">
+                        <input type="search" placeholder="Buscar família ou responsável...">
+                    </div>
+
+                    <select>
+                        <option>Todos os períodos</option>
+                        <option>Novembro/2026</option>
+                        <option>Outubro/2026</option>
+                        <option>Setembro/2026</option>
+                    </select>
+
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Família</th>
+                                <th>Data</th>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Observação</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>001</td>
+                                <td>Maria Oliveira</td>
+                                <td>10/11/2026</td>
+                                <td>Arroz tipo 1</td>
+                                <td>2 pacotes</td>
+                                <td>Entrega mensal</td>
+                                <td><span class="status">Concluída</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>002</td>
+                                <td>José Santos</td>
+                                <td>08/11/2026</td>
+                                <td>Feijão carioca</td>
+                                <td>2 pacotes</td>
+                                <td>Entrega mensal</td>
+                                <td><span class="status">Concluída</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>003</td>
+                                <td>Ana Costa</td>
+                                <td>05/11/2026</td>
+                                <td>Óleo de soja</td>
+                                <td>1 unidade</td>
+                                <td>Entrega mensal</td>
+                                <td><span class="status">Concluída</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>004</td>
+                                <td>Maria Oliveira</td>
+                                <td>05/10/2026</td>
+                                <td>Arroz tipo 1</td>
+                                <td>2 pacotes</td>
+                                <td>Entrega mensal</td>
+                                <td><span class="status">Concluída</span></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

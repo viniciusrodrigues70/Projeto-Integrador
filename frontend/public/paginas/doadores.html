@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doadores | Banco Solidário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div><h2>Banco Solidário</h2><small>Gestão de alimentos</small></div>
+        </div>
+
+        <p class="nav-title">Menu principal</p>
+
+        <nav class="nav">
+            <a href="dashboard.html"><span class="nav-icon">⌂</span> Dashboard</a>
+            <a href="doadores.html" class="active"><span class="nav-icon">♡</span> Doadores</a>
+            <a href="produtos.html"><span class="nav-icon">▦</span> Produtos</a>
+            <a href="familias.html"><span class="nav-icon">♧</span> Famílias</a>
+            <a href="estoque.html"><span class="nav-icon">▤</span> Estoque</a>
+            <a href="entregas.html"><span class="nav-icon">⇧</span> Entregas</a>
+        </nav>
+
+        <div class="sidebar-footer">Banco de Alimentos<br>Portal Administrativo</div>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <span class="breadcrumb">Banco Solidário / Doadores</span>
+            <div class="profile">
+                <div class="avatar">AD</div>
+                <div><strong>Administrador</strong><small>Área administrativa</small></div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <div class="eyebrow">Gerenciamento de cadastros</div>
+                <h1>Doadores</h1>
+                <p>Gerencie as pessoas e instituições que contribuem com alimentos.</p>
+            </div>
+
+            <div class="stats">
+                <div class="card">
+                    <span class="stat-label">Total de doadores</span>
+                    <strong class="stat-number">32</strong>
+                    <span class="stat-description">Cadastros registrados</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Doações recebidas</span>
+                    <strong class="stat-number">156</strong>
+                    <span class="stat-description">Registros de entrada</span>
+                </div>
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Lista de doadores</h2>
+                        <p>Consulte os doadores cadastrados.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search">
+                        <input type="search" placeholder="Buscar por nome ou e-mail...">
+                    </div>
+                    <a href="#cadastro" class="btn">+ Novo doador</a>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Telefone</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>Mercado Esperança</td>
+                                <td>contato@mercado.com</td>
+                                <td>(82) 3333-1000</td>
+                                <td><span class="status">Cadastrado</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>002</td>
+                                <td>João Almeida</td>
+                                <td>joao@email.com</td>
+                                <td>(82) 99999-1000</td>
+                                <td><span class="status">Cadastrado</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>003</td>
+                                <td>Supermercado Aliança</td>
+                                <td>doacoes@alianca.com</td>
+                                <td>(82) 3333-2000</td>
+                                <td><span class="status">Cadastrado</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="form-card" id="cadastro">
+
+                <h2>Cadastrar novo doador</h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="nome">Nome do doador</label>
+                        <input type="text" id="nome" placeholder="Nome completo ou instituição">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" placeholder="email@exemplo.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <a href="doadores.html" class="btn btn-secondary">Cancelar</a>
+                    <button type="button" class="btn">Salvar doador</button>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>

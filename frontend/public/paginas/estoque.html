@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque | Banco Solidário</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div><h2>Banco Solidário</h2><small>Gestão de alimentos</small></div>
+        </div>
+
+        <p class="nav-title">Menu principal</p>
+
+        <nav class="nav">
+            <a href="dashboard.html"><span class="nav-icon">⌂</span> Dashboard</a>
+            <a href="doadores.html"><span class="nav-icon">♡</span> Doadores</a>
+            <a href="produtos.html"><span class="nav-icon">▦</span> Produtos</a>
+            <a href="familias.html"><span class="nav-icon">♧</span> Famílias</a>
+            <a href="estoque.html" class="active"><span class="nav-icon">▤</span> Estoque</a>
+            <a href="entregas.html"><span class="nav-icon">⇧</span> Entregas</a>
+        </nav>
+
+        <div class="sidebar-footer">Banco de Alimentos<br>Portal Administrativo</div>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <span class="breadcrumb">Banco Solidário / Estoque</span>
+            <div class="profile">
+                <div class="avatar">AD</div>
+                <div><strong>Administrador</strong><small>Área administrativa</small></div>
+            </div>
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <div class="eyebrow">Controle de alimentos</div>
+                <h1>Estoque e Lotes</h1>
+                <p>Monitore os produtos disponíveis e acompanhe a validade de cada lote.</p>
+            </div>
+
+            <div class="stats">
+
+                <div class="card">
+                    <span class="stat-label">Produtos cadastrados</span>
+                    <strong class="stat-number">36</strong>
+                    <span class="stat-description">Tipos de alimentos</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Lotes registrados</span>
+                    <strong class="stat-number">124</strong>
+                    <span class="stat-description">Entradas de alimentos</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Quantidade disponível</span>
+                    <strong class="stat-number">1.284</strong>
+                    <span class="stat-description">Unidades em estoque</span>
+                </div>
+
+                <div class="card">
+                    <span class="stat-label">Próximos do vencimento</span>
+                    <strong class="stat-number">08</strong>
+                    <span class="stat-description">Lotes nos próximos 30 dias</span>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Estoque por produto</h2>
+                        <p>Quantidade total disponível de cada alimento.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search">
+                        <input type="search" placeholder="Buscar produto...">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Categoria</th>
+                                <th>Quantidade total</th>
+                                <th>Unidade</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>Arroz tipo 1</td>
+                                <td>Grãos</td>
+                                <td>180</td>
+                                <td>Pacotes</td>
+                                <td><span class="status">Disponível</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Feijão carioca</td>
+                                <td>Grãos</td>
+                                <td>125</td>
+                                <td>Pacotes</td>
+                                <td><span class="status">Disponível</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Óleo de soja</td>
+                                <td>Óleos</td>
+                                <td>74</td>
+                                <td>Unidades</td>
+                                <td><span class="status">Disponível</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Leite em pó</td>
+                                <td>Laticínios</td>
+                                <td>52</td>
+                                <td>Pacotes</td>
+                                <td><span class="status">Disponível</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Controle de lotes</h2>
+                        <p>Consulte a validade e as quantidades de cada recebimento.</p>
+                    </div>
+                </div>
+
+                <div class="toolbar">
+                    <div class="search">
+                        <input type="search" placeholder="Buscar lote ou produto...">
+                    </div>
+
+                    <select>
+                        <option>Todas as situações</option>
+                        <option>Disponível</option>
+                        <option>Próximo do vencimento</option>
+                        <option>Vencido</option>
+                    </select>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID do lote</th>
+                                <th>Produto</th>
+                                <th>Doador</th>
+                                <th>Qtd. inicial</th>
+                                <th>Qtd. atual</th>
+                                <th>Recebimento</th>
+                                <th>Validade</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>LT-001</td>
+                                <td>Arroz tipo 1</td>
+                                <td>Mercado Esperança</td>
+                                <td>100</td>
+                                <td>80</td>
+                                <td>01/11/2026</td>
+                                <td>20/03/2027</td>
+                                <td><span class="status">Disponível</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>LT-002</td>
+                                <td>Feijão carioca</td>
+                                <td>João Almeida</td>
+                                <td>60</td>
+                                <td>45</td>
+                                <td>05/11/2026</td>
+                                <td>25/11/2026</td>
+                                <td><span class="status warning">Próximo do vencimento</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>LT-003</td>
+                                <td>Óleo de soja</td>
+                                <td>Supermercado Aliança</td>
+                                <td>40</td>
+                                <td>32</td>
+                                <td>07/11/2026</td>
+                                <td>10/08/2027</td>
+                                <td><span class="status">Disponível</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>LT-004</td>
+                                <td>Leite em pó</td>
+                                <td>Mercado Esperança</td>
+                                <td>20</td>
+                                <td>0</td>
+                                <td>10/08/2026</td>
+                                <td>01/11/2026</td>
+                                <td><span class="status danger">Vencido</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <div class="form-card">
+
+                <h2>Registrar recebimento de doação</h2>
+
+                <div class="notice">
+                    Cada recebimento deve gerar um lote individual,
+                    permitindo controlar separadamente a quantidade
+                    e a validade dos alimentos.
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="doador">Doador</label>
+                        <select id="doador">
+                            <option>Selecione o doador</option>
+                            <option>Mercado Esperança</option>
+                            <option>João Almeida</option>
+                            <option>Supermercado Aliança</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="produto">Produto</label>
+                        <select id="produto">
+                            <option>Selecione o produto</option>
+                            <option>Arroz tipo 1</option>
+                            <option>Feijão carioca</option>
+                            <option>Óleo de soja</option>
+                            <option>Leite em pó</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantidade">Quantidade recebida</label>
+                        <input type="number" id="quantidade" placeholder="Quantidade inicial">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recebimento">Data de recebimento</label>
+                        <input type="date" id="recebimento">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="validade">Data de validade</label>
+                        <input type="date" id="validade">
+                    </div>
+
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                    <button type="button" class="btn">Registrar lote</button>
+                </div>
+
+            </div>
+
+            <div class="notice">
+                <strong>Regra de controle:</strong>
+                a distribuição deve priorizar os lotes com validade
+                mais próxima. Produtos vencidos não podem ser entregues.
+            </div>
+
+        </section>
+    </main>
+
+</div>
+
+</body>
+</html>
