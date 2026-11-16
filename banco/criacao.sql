@@ -1,17 +1,17 @@
 Create Database if not exists Banco_Alimentos;
 USE Banco_Alimentos;
 
-
-Create table Usuario(
-    Id_Usuario int auto_increment primary key,
+-- Vitor Calheiros
+Create table if not exists Usuario(
+    id_usuario int auto_increment primary key,
     nome varchar(100) not null,
-    email varchar(100) not null,
+    email varchar(100) not null unique,
     senha varchar(100) not null,
     tipo enum('OPERADOR',"ADMINISTRADOR") not null
 );
 
-Create table Doador(
-    Id_Doador int auto_increment primary key,
+Create table if not exists Doador(
+    id_doador int auto_increment primary key,
     nome varchar(100) not null,
     email varchar(100) not null,
     telefone varchar(20),
@@ -31,3 +31,38 @@ insert into Doador(nome, email,telefone, tipo_doador)
 values ('Vincente', 'V@gmail.com', '82 98100-0077', 'PESSOA_FISICA'),
        ('Marcelo', 'Marc@gmail.com', '82 97777-7777', 'PESSOA_FISICA'),
        ('Nestlé', 'doacoes@nestle.exemplo', '82 90000-0001', 'EMPRESA');
+
+-- Vinícius Rodrigues 
+
+Create table if not exists Produto (
+    id_produto int auto_increment primary key,
+    nome varchar (100) not null,
+    descricao varchar (300) not null,
+    peso decimal(5,2),
+    categoria varchar(50) not null,
+    quantidade int not null
+);
+
+Create table Lote (
+    id_lote int auto_increment primary key,
+    validade date not null,
+    qtd_inicial int not null,
+    qtd_atual int not null,
+    data_recebimento date not null,
+    id_produto int not null,
+    id_doador int not null
+    foreign key (id_produto) references Produto(id_produto),
+    foreign key (id_doador) references Doador(id_doador)
+);
+
+insert into Produto VALUES
+('Arroz Branco Tipo 1', 'Pacote de arroz branco', 5.00, 'Grãos e Cereais', 50),
+('Feijão Carioca', 'Pacote de feijão carioca turquesa', 1.00, 'Grãos e Cereais', 80),
+('Leite Integral', 'Caixa de leite integral 1L', 1.00, 'Laticínios', 120),
+('Macarrão Espaguete', 'Pacote de massa espaguete', 0.50, 'Massas', 60);
+
+INSERT INTO Lote VALUES
+('2027-05-15', 50, 50, '2026-11-10', 1, 1),
+('2027-03-20', 80, 65, '2026-11-12', 2, 2),
+('2027-01-30', 120, 120, '2026-11-15', 3, 3), 
+('2027-08-10', 60, 40, '2026-11-16', 4, 3);
