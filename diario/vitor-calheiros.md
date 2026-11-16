@@ -1,4 +1,5 @@
 # Diario de bordo: 
 🠒 Atualização do projeto lógico atualizando a parte dos relacionamentos e referenciais;  
 🠒 Auxiliei na criação do DER;  
-🠒Criação dos desenhos base das páginas html;
+🠒Criação dos desenhos base das páginas html;  
+🠒Iniciei criando banco fazendo as tabelas Usuário e Doador;
