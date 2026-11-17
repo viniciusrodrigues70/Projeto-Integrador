@@ -78,7 +78,32 @@ Create table if not exists Familia(
     telefone varchar(20)
 );
 
+Create table if not exists Entrega_cesta(
+	id_entrega int primary key,
+    data_entrega date,
+    observacao varchar(255),
+    id_familia int,
+    foreign key (id_familia) references familia(id_familia)
+);
+
+Create table if not exists Item_entrega(
+	id_item int primary key,
+    id_produto int,
+    quantidade int,
+    foreign key (id_produto) references produto(id_produto)
+);
+
 insert into Familia (id_familia, nome_responsavel, cpf_responsavel, num_integrantes, endereco, telefone)
 values (1, 'Ariana Grande', '111.456.333-02', 4, 'Rua das Flores, 123', '(82) 99999-1111'),
-       (2, 'Oliver tree', '234.567.890-12', 3, 'Av. Principal, 456', '(82) 98888-2222'),
-       (3, 'Joana darc', '345.678.901-23', 5, 'Rua do Sol, 789', '(82) 97777-3333');
+	   (2, 'Oliver tree', '234.567.890-12', 3, 'Av. Principal, 456', '(82) 98888-2222'),
+	   (3, 'Joana darc', '345.678.901-23', 5, 'Rua do Sol, 789', '(82) 97777-3333');
+
+insert into Entrega_cesta (id_entrega, data_entrega, observacao, id_familia)
+values (1, '2026-10-01', 'Entrega realizada com sucesso.', 1),
+       (2, '2026-10-02', 'Ausente, pórem entregue logo após', 2),
+       (3, '2026-10-03', 'Cesta padrão entregue ao responsável.', 3);
+
+insert into Item_entrega (id_item, id_produto, quantidade)
+values (1, 1, 2),
+	   (2, 2, 1),
+	   (3, 3, 2);
