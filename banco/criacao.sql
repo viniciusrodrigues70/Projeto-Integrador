@@ -26,14 +26,14 @@ Create table if not exists Doador(
 insert into Usuario (nome, email,senha,tipo)
 values ('Zé', 'ZE@gmail.com', '123456', 'ADMINISTRADOR'),
        ('Ana', "Ana@gmail.com", 'admin', 'ADMINISTRADOR'),
-       ('Carlos', 'carlos@gmail.com', 'hash_exemplo_03', 'OPERADOR'),
-        ('Maria', 'maria@gmail.com', 'hash_exemplo_04', 'OPERADOR'),
-        ('Joao', 'joao@gmail.com', 'hash_exemplo_05', 'OPERADOR'),
-        ('Pedro', 'pedro@gmail.com', 'hash_exemplo_06', 'OPERADOR'),
-        ('Julia', 'julia@gmail.com', 'hash_exemplo_07', 'OPERADOR'),
-        ('Lucas', 'lucas@gmail.com', 'hash_exemplo_08', 'OPERADOR'),
-        ('Fernanda', 'fernanda@gmail.com', 'hash_exemplo_09', 'OPERADOR'),
-        ('Rafael', 'rafael@gmail.com', 'hash_exemplo_10', 'OPERADOR');
+       ('Carlos', 'carlos@gmail.com', 'C234', 'OPERADOR'),
+        ('Maria', 'maria@gmail.com', '3008', 'OPERADOR'),
+        ('Joao', 'joao@gmail.com', 'jKLMNP', 'OPERADOR'),
+        ('Pedro', 'pedro@gmail.com', 'YOI#e', 'OPERADOR'),
+        ('Julia', 'julia@gmail.com', 'Confusa234', 'OPERADOR'),
+        ('Lucas', 'lucas@gmail.com', '097lucas', 'OPERADOR'),
+        ('Fernanda', 'fernanda@gmail.com', 'Feh567', 'OPERADOR'),
+        ('Rafael', 'rafael@gmail.com', 'vasco67', 'OPERADOR');
 
 insert into Doador(nome, email,telefone, tipo_doador)
 values ('Vincente', 'V@gmail.com', '82 98100-0077', 'PESSOA_FISICA'),
@@ -124,3 +124,17 @@ insert into Item_Entrega (id_produto, quantidade) values
     (8, 30),
     (9, 18),
     (10, 14);
+
+    select l.id_lote, p.nome as produto, d.nome as doador, l.qtd_inicial, l.qtd_atual, l.validade
+from Lote as l
+inner join Produto as p
+    on l.id_produto = p.id_produto
+inner join Doador as d
+    on l.id_doador = d.id_doador;
+
+select p.nome as produto, l.id_lote, l.qtd_inicial, l.qtd_atual, l.validade
+from Produto as p
+inner join Lote as l
+    on p.id_produto = l.id_produto;
+
+-- Márcio Daniel
