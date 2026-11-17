@@ -47,7 +47,8 @@ values ('Vincente', 'V@gmail.com', '82 98100-0077', 'PESSOA_FISICA'),
         ('Roberto', 'roberto@gmail.com', '82981000009', 'PESSOA_FISICA'),
         ('Mercadinho', 'mercadinho@email.com', '82981000010', 'EMPRESA');
 
-
+select * from Doador where tipo_doador = "PESSOA_FISICA";
+select * from Usuario;
 
 
 -- Vinícius Rodrigues 
