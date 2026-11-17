@@ -137,4 +137,38 @@ from Produto as p
 inner join Lote as l
     on p.id_produto = l.id_produto;
 
--- Márcio Daniell 
+-- Marcio Daniel
+
+Create table if not exists Familia(
+	id_familia int primary key,
+    nome_responsavel varchar (200),
+    cpf_responsavel varchar(14),
+    num_integrantes int,
+    endereco varchar(260),
+    telefone varchar(20)
+);
+
+Create table if not exists Entrega_cesta(
+	id_entrega int primary key,
+    data_entrega date,
+    observacao varchar(255),
+    id_familia int,
+    foreign key (id_familia) references familia(id_familia)
+);
+
+insert into Familia (id_familia, nome_responsavel, cpf_responsavel, num_integrantes, endereco, telefone)
+values (1, 'Ariana Grande', '111.456.333-02', 4, 'Rua das Flores, 123', '(82) 99999-1111'),
+       (2, 'Oliver Tree', '234.567.890-12', 3, 'Av. Principal, 456', '(82) 98888-2222'),
+       (3, 'Joana Darc', '345.678.901-23', 5, 'Rua do Sol, 789', '(82) 97777-3333'),
+       (4, 'Renato Vasconcelos', '456.789.012-34', 2, 'Rua da Paz, 101', '(82) 96666-4444'),
+       (5, 'Camila Pitanga', '567.890.123-45', 4, 'Av. Atlântica, 202', '(82) 95555-5555'),
+       (6, 'Thiago Lacerda', '678.901.234-56', 3, 'Rua do Catete, 303', '(82) 94444-6666'),
+       (7, 'Bianca Andrade', '789.012.345-67', 6, 'Praça da Matriz, 404', '(82) 93333-7777'),
+       (8, 'Rodrigo Hilbert', '890.123.456-78', 2, 'Rua dos Coqueiros, 505', '(82) 92222-8888'),
+       (9, 'Tatiana Lima', '901.234.567-89', 5, 'Rua Nova, 606', '(82) 91111-9999'),
+       (10, 'Henrique Fogaça', '012.345.678-90', 3, 'Travessa da Praia, 707', '(82) 90000-0000');
+
+insert into Entrega_cesta (id_entrega, data_entrega, observacao, id_familia)
+values (1, '2026-10-01', 'Entrega realizada com sucesso.', 1),
+       (2, '2026-10-02', 'Ausente, pórem entregue logo após', 2),
+       (3, '2026-10-03', 'Cesta padrão entregue ao responsável.', 3);
