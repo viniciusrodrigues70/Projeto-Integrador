@@ -1,3 +1,4 @@
+drop database if exists Banco_Alimentos;
 Create Database if not exists Banco_Alimentos;
 USE Banco_Alimentos;
 
@@ -16,12 +17,10 @@ Create table if not exists Doador(
     email varchar(100) not null,
     telefone varchar(20),
     tipo_doador enum(
-        'EMPRESA',
-        'PESSOA_FISICA',
-        'INSTITUICAO'
+        'EMPRESA/INSTITUICAO',
+        'PESSOA_FISICA'
     ) not null
 );
-
 
 insert into Usuario (nome, email,senha,tipo)
 values ('Zé', 'ZE@gmail.com', '123456', 'ADMINISTRADOR'),
@@ -35,21 +34,20 @@ values ('Zé', 'ZE@gmail.com', '123456', 'ADMINISTRADOR'),
         ('Fernanda', 'fernanda@gmail.com', 'Feh567', 'OPERADOR'),
         ('Rafael', 'rafael@gmail.com', 'vasco67', 'OPERADOR');
 
-insert into Doador(nome, email,telefone, tipo_doador)
-values ('Vincente', 'V@gmail.com', '82 98100-0077', 'PESSOA_FISICA'),
-       ('Marcelo', 'Marc@gmail.com', '82 97777-7777', 'PESSOA_FISICA'),
-       ('Nestlé', 'doacoes@nestle.exemplo', '82 90000-0001', 'EMPRESA'),
-        ('Carrefour', 'doacoes@carrefour.com.br', '82981000004', 'EMPRESA'),
-        ('Igreja Esperanca', 'contato@esperanca.com', '82981000005', 'INSTITUICAO'),
+insert into Doador(nome, email,telefone, tipo_doador) values 
+		('Vincente', 'V@gmail.com', '82 98100-0077', 'PESSOA_FISICA'),
+		('Marcelo', 'Marc@gmail.com', '82 97777-7777', 'PESSOA_FISICA'),
+		('Nestlé', 'doacoes@nestle.exemplo', '82 90000-0001', 'EMPRESA/INSTITUICAO'),
+        ('Carrefour', 'doacoes@carrefour.com.br', '82981000004', 'EMPRESA/INSTITUICAO'),
+        ('Igreja Esperanca', 'contato@esperanca.com', '82981000005', 'EMPRESA/INSTITUICAO'),
         ('Joana', 'joana@gmail.com', '82981000006', 'PESSOA_FISICA'),
-        ('Assuncao Alimentos', 'contato@assuncao.com', '82981000007', 'EMPRESA'),
-        ('Instituto Social', 'instituto@email.com', '82981000008', 'INSTITUICAO'),
+        ('Assuncao Alimentos', 'contato@assuncao.com', '82981000007', 'EMPRESA/INSTITUICAO'),
+        ('Instituto Social', 'instituto@email.com', '82981000008', 'EMPRESA/INSTITUICAO'),
         ('Roberto', 'roberto@gmail.com', '82981000009', 'PESSOA_FISICA'),
-        ('Mercadinho', 'mercadinho@email.com', '82981000010', 'EMPRESA');
+        ('Mercadinho', 'mercadinho@email.com', '82981000010', 'EMPRESA/INSTITUICAO');
 
-select * from Doador where tipo_doador = "PESSOA_FISICA";
+select nome, email, CONCAT('(', LEFT(telefone, 2), ') ', SUBSTRING(telefone, 3, 5), '-', RIGHT(telefone, 4)) AS telefone, tipo_doador from Doador where tipo_doador = "PESSOA_FISICA";
 select * from Usuario;
-
 
 -- Vinícius Rodrigues 
 
@@ -59,9 +57,7 @@ Create table if not exists Produto (
     descricao varchar (300) not null,
     peso decimal(5,2),
     categoria varchar(50) not null,
-    quantidade int not null,
-
-    check (peso > 0)
+    quantidade int not null
 );
 
 Create table  if not exists Lote (
@@ -73,13 +69,7 @@ Create table  if not exists Lote (
     id_produto int not null,
     id_doador int not null,
     foreign key (id_produto) references Produto(id_produto),
-    foreign key (id_doador) references Doador(id_doador),
-
-    
-    check (qtd_inicial > 0),
-    check (qtd_atual >= 0),
-    check (qtd_atual <= qtd_inicial),
-    check (validade >= data_recebimento)
+    foreign key (id_doador) references Doador(id_doador)
 );
 
 Create table Item_Entrega (
@@ -126,7 +116,7 @@ insert into Item_Entrega (id_produto, quantidade) values
     (9, 18),
     (10, 14);
 
-    select l.id_lote, p.nome as produto, d.nome as doador, l.qtd_inicial, l.qtd_atual, l.validade
+select l.id_lote, p.nome as produto, d.nome as doador, l.qtd_inicial, l.qtd_atual, date_format(l.validade, '%d/%m/%Y') as validade 
 from Lote as l
 inner join Produto as p
     on l.id_produto = p.id_produto
@@ -141,35 +131,41 @@ inner join Lote as l
 -- Marcio Daniel
 
 Create table if not exists Familia(
-	id_familia int primary key,
-    nome_responsavel varchar (200),
-    cpf_responsavel varchar(14),
-    num_integrantes int,
-    endereco varchar(260),
+	id_familia int auto_increment primary key,
+    nome_responsavel varchar (200) not null,
+    cpf_responsavel varchar(14) not null,
+    num_integrantes int not null,
+    endereco varchar(260) not null,
     telefone varchar(20)
 );
 
 Create table if not exists Entrega_cesta(
-	id_entrega int primary key,
-    data_entrega date,
+	id_entrega int auto_increment primary key,
+    data_entrega date not null,
     observacao varchar(255),
-    id_familia int,
+    id_familia int not null,
     foreign key (id_familia) references familia(id_familia)
 );
 
-insert into Familia (id_familia, nome_responsavel, cpf_responsavel, num_integrantes, endereco, telefone)
-values (1, 'Ariana Grande', '111.456.333-02', 4, 'Rua das Flores, 123', '(82) 99999-1111'),
-       (2, 'Oliver Tree', '234.567.890-12', 3, 'Av. Principal, 456', '(82) 98888-2222'),
-       (3, 'Joana Darc', '345.678.901-23', 5, 'Rua do Sol, 789', '(82) 97777-3333'),
-       (4, 'Renato Vasconcelos', '456.789.012-34', 2, 'Rua da Paz, 101', '(82) 96666-4444'),
-       (5, 'Camila Pitanga', '567.890.123-45', 4, 'Av. Atlântica, 202', '(82) 95555-5555'),
-       (6, 'Thiago Lacerda', '678.901.234-56', 3, 'Rua do Catete, 303', '(82) 94444-6666'),
-       (7, 'Bianca Andrade', '789.012.345-67', 6, 'Praça da Matriz, 404', '(82) 93333-7777'),
-       (8, 'Rodrigo Hilbert', '890.123.456-78', 2, 'Rua dos Coqueiros, 505', '(82) 92222-8888'),
-       (9, 'Tatiana Lima', '901.234.567-89', 5, 'Rua Nova, 606', '(82) 91111-9999'),
-       (10, 'Henrique Fogaça', '012.345.678-90', 3, 'Travessa da Praia, 707', '(82) 90000-0000');
+insert into Familia (nome_responsavel, cpf_responsavel, num_integrantes, endereco, telefone)
+values ('Ariana Grande', '111.456.333-02', 4, 'Rua das Flores, 123', '(82) 99999-1111'),
+       ('Oliver Tree', '234.567.890-12', 3, 'Av. Principal, 456', '(82) 98888-2222'),
+       ('Joana Darc', '345.678.901-23', 5, 'Rua do Sol, 789', '(82) 97777-3333'),
+       ('Renato Vasconcelos', '456.789.012-34', 2, 'Rua da Paz, 101', '(82) 96666-4444'),
+       ('Camila Pitanga', '567.890.123-45', 4, 'Av. Atlântica, 202', '(82) 95555-5555'),
+       ('Thiago Lacerda', '678.901.234-56', 3, 'Rua do Catete, 303', '(82) 94444-6666'),
+       ('Bianca Andrade', '789.012.345-67', 6, 'Praça da Matriz, 404', '(82) 93333-7777'),
+       ('Rodrigo Hilbert', '890.123.456-78', 2, 'Rua dos Coqueiros, 505', '(82) 92222-8888'),
+       ('Tatiana Lima', '901.234.567-89', 5, 'Rua Nova, 606', '(82) 91111-9999'),
+       ('Henrique Fogaça', '012.345.678-90', 3, 'Travessa da Praia, 707', '(82) 90000-0000');
 
-insert into Entrega_cesta (id_entrega, data_entrega, observacao, id_familia) values 
-    (1, '2026-10-01', 'Entrega realizada com sucesso.', 1),
-    (2, '2026-10-02', 'Ausente, pórem entregue logo após', 2),
-    (3, '2026-10-03', 'Cesta padrão entregue ao responsável.', 3);
+insert into Entrega_cesta (data_entrega, observacao, id_familia) values 
+    ('2026-10-01', 'Entrega realizada com sucesso.', 1),
+    ('2026-10-02', 'Ausente, pórem entregue logo após', 2),
+    ('2026-10-03', 'Cesta padrão entregue ao responsável.', 3);
+
+
+select f.nome_responsavel as nome, LPAD(RIGHT(f.cpf_responsavel, 7), 12, '*') AS CPF
+from Familia f
+inner join Entrega_cesta ec
+on f.id_familia = ec.id_familia;
