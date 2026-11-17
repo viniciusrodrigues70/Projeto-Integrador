@@ -23,11 +23,11 @@ Create table if not exists Doador(
 );
 
 
-insert into Usuario (nome, email,senha,tipo)
+insert into Usuario (nome, email, senha, tipo)
 values ('Zé', 'ZE@gmail.com', '123456', 'ADMINISTRADOR'),
        ('Ana', "Ana@gmail.com", 'admin', 'ADMINISTRADOR');
 
-insert into Doador(nome, email,telefone, tipo_doador)
+insert into Doador(nome, email, telefone, tipo_doador)
 values ('Vincente', 'V@gmail.com', '82 98100-0077', 'PESSOA_FISICA'),
        ('Marcelo', 'Marc@gmail.com', '82 97777-7777', 'PESSOA_FISICA'),
        ('Nestlé', 'doacoes@nestle.exemplo', '82 90000-0001', 'EMPRESA');
@@ -66,3 +66,19 @@ INSERT INTO Lote VALUES
 ('2027-03-20', 80, 65, '2026-11-12', 2, 2),
 ('2027-01-30', 120, 120, '2026-11-15', 3, 3), 
 ('2027-08-10', 60, 40, '2026-11-16', 4, 3);
+
+-- Marcio Daniel
+
+Create table if not exists Familia(
+	id_familia int primary key,
+    nome_responsavel varchar (200),
+    cpf_responsavel varchar(14),
+    num_integrantes int,
+    endereco varchar(260),
+    telefone varchar(20)
+);
+
+insert into Familia (id_familia, nome_responsavel, cpf_responsavel, num_integrantes, endereco, telefone)
+values (1, 'Ariana Grande', '111.456.333-02', 4, 'Rua das Flores, 123', '(82) 99999-1111'),
+       (2, 'Oliver tree', '234.567.890-12', 3, 'Av. Principal, 456', '(82) 98888-2222'),
+       (3, 'Joana darc', '345.678.901-23', 5, 'Rua do Sol, 789', '(82) 97777-3333');
