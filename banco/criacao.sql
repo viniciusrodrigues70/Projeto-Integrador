@@ -137,4 +137,4 @@ from Produto as p
 inner join Lote as l
     on p.id_produto = l.id_produto;
 
--- Márcio Daniel
+-- Márcio Daniell 
