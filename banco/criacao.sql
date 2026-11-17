@@ -59,7 +59,7 @@ Create table if not exists Produto (
     descricao varchar (300) not null,
     peso decimal(5,2),
     categoria varchar(50) not null,
-    quantidade int not null
+    quantidade int not null,
 
     check (peso > 0)
 );
@@ -73,7 +73,7 @@ Create table  if not exists Lote (
     id_produto int not null,
     id_doador int not null,
     foreign key (id_produto) references Produto(id_produto),
-    foreign key (id_doador) references Doador(id_doador)
+    foreign key (id_doador) references Doador(id_doador),
 
     
     check (qtd_inicial > 0),
@@ -95,12 +95,12 @@ insert into Produto (nome, descricao, peso, categoria, quantidade) VALUES
     ('Feijão Carioca', 'Pacote de feijão carioca turquesa', 10.00, 'Grãos e Cereais', 80),
     ('Leite Integral', 'Caixa de leite integral 1L', 8.00, 'Laticínios', 120),
     ('Macarrão Espaguete', 'Pacote de massa espaguete', 4.50, 'Massas', 60),
-    ('Acucar Refinado', 'Pacote de acucar refinado', 3.00, 'Mercearia'),
-    ('Farinha de Trigo', 'Pacote de farinha de trigo', 6.00, 'Farinhas'),
-    ('Oleo de Soja', 'Garrafa de oleo de soja', 9.90, 'Oleos'),
-    ('Cafe em Po', 'Pacote de cafe torrado e moido', 16.25, 'Bebidas'),
-    ('Biscoito Cream Cracker', 'Pacote de biscoito salgado', 3.40, 'Biscoitos'),
-    ('Farinha de Milho', 'Pacote de farinha de milho', 9.50, 'Farinhas');
+    ('Acucar Refinado', 'Pacote de acucar refinado', 3.00, 'Mercearia', 42),
+    ('Farinha de Trigo', 'Pacote de farinha de trigo', 6.00, 'Farinhas', 35),
+    ('Oleo de Soja', 'Garrafa de oleo de soja', 9.90, 'Oleos', 20),
+    ('Cafe em Po', 'Pacote de cafe torrado e moido', 16.25, 'Bebidas', 45),
+    ('Biscoito Cream Cracker', 'Pacote de biscoito salgado', 3.40, 'Biscoitos', 65),
+    ('Farinha de Milho', 'Pacote de farinha de milho', 9.50, 'Farinhas', 21);
 
 insert into Lote (validade, qtd_inicial, qtd_atual, data_recebimento, id_produto, id_doador) VALUES
     ('2027-05-15', 50, 50, '2026-11-10', 1, 1),
@@ -133,7 +133,7 @@ inner join Produto as p
 inner join Doador as d
     on l.id_doador = d.id_doador;
 
-select p.nome as produto, l.id_lote, l.qtd_inicial, l.qtd_atual, l.validade
+select p.nome as produto, l.id_lote, l.qtd_inicial, l.qtd_atual, date_format(l.validade, '%d/%m/%Y') as validade
 from Produto as p
 inner join Lote as l
     on p.id_produto = l.id_produto;
@@ -169,7 +169,7 @@ values (1, 'Ariana Grande', '111.456.333-02', 4, 'Rua das Flores, 123', '(82) 99
        (9, 'Tatiana Lima', '901.234.567-89', 5, 'Rua Nova, 606', '(82) 91111-9999'),
        (10, 'Henrique Fogaça', '012.345.678-90', 3, 'Travessa da Praia, 707', '(82) 90000-0000');
 
-insert into Entrega_cesta (id_entrega, data_entrega, observacao, id_familia)
-values (1, '2026-10-01', 'Entrega realizada com sucesso.', 1),
-       (2, '2026-10-02', 'Ausente, pórem entregue logo após', 2),
-       (3, '2026-10-03', 'Cesta padrão entregue ao responsável.', 3);
+insert into Entrega_cesta (id_entrega, data_entrega, observacao, id_familia) values 
+    (1, '2026-10-01', 'Entrega realizada com sucesso.', 1),
+    (2, '2026-10-02', 'Ausente, pórem entregue logo após', 2),
+    (3, '2026-10-03', 'Cesta padrão entregue ao responsável.', 3);
