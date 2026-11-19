@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Redefinir senha | Banco Solidário</title>
+
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+
+<body>
+
+
+    <main class="login-page">
+
+
+        <section class="login-side">
+
+
+            <div class="brand">
+                <div class="brand-icon">✚</div>
+
+
+                <div>
+                    <h2>Banco Solidário</h2>
+                    <small>Gestão de alimentos</small>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="eyebrow" style="color:#a9d6b8;">
+                    Novo acesso
+                </div>
+
+
+                <h1>Defina uma nova senha.</h1>
+
+
+                <p>
+                    Escolha uma senha com pelo menos 8 caracteres para proteger sua conta.
+                </p>
+            </div>
+
+
+            <small>O link só pode ser usado uma vez.</small>
+
+
+        </section>
+
+
+        <section class="login-form">
+
+
+            <div class="login-box">
+
+
+                <div class="eyebrow">Redefinição de senha</div>
+
+
+                <h2>Nova senha</h2>
+
+
+                <p>Digite e confirme sua nova senha.</p>
+
+
+                <form id="redefinir-form">
+
+
+                    <div class="form-group">
+                        <label for="senha">Nova senha</label>
+
+
+                        <input
+                            id="senha"
+                            name="senha"
+                            type="password"
+                            autocomplete="new-password"
+                            required
+                            minlength="8"
+                            maxlength="72"
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="confirmar-senha">Confirmar senha</label>
+
+
+                        <input
+                            id="confirmar-senha"
+                            name="confirmarSenha"
+                            type="password"
+                            autocomplete="new-password"
+                            required
+                            minlength="8"
+                            maxlength="72"
+                        >
+                    </div>
+
+
+                    <div
+                        id="mensagem"
+                        class="auth-message"
+                        role="status"
+                        aria-live="polite"
+                        hidden
+                    ></div>
+
+
+                    <button type="submit" class="btn">
+                        Salvar nova senha
+                    </button>
+
+
+                </form>
+
+
+                <div class="auth-links">
+                    <a href="login.html">Voltar ao login</a>
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/redefinir-senha.js"></script>
+
+
+</body>
+</html>
