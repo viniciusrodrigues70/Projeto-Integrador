@@ -1,6 +1,6 @@
-# Diario de bordo: 
-🠒 Atualização do projeto lógico atualizando a parte dos relacionamentos e referenciais;  
-🠒 Auxiliei na criação do DER no dia 09/11;  
-🠒 No dia 10/11 ajustei ambos os projetos lógicos e conceituais com auxílio de Vinícius Rodrigues;  
-🠒Criação dos desenhos base das páginas html no dia 11/11;  
-🠒Iniciei criando banco fazendo as tabelas Usuário e Doador no dia 16/11;
+# Diário de Bordo
+- **09/11:** Auxiliei na elaboração do Diagrama Entidade-Relacionamento (DER). Além de reformular alguns relacionamentos do modelo lógico (chaves prímarias, referenciais)
+- **10/11:** Realizei ajustes nos projetos lógico e conceitual, com o auxílio de Vinícius Rodrigues.
+- **11/11:** Desenvolvi os esboços iniciais das páginas HTML do sistema.
+- **16/11:** Iniciei a criação do banco de dados, desenvolvendo as tabelas `Usuário` e `Doador`.
+- **18/11:** Desenvolvi o `AuthController.js`, o Model de Usuário, os arquivos `cadastro.js` e `auth.js`, além de realizar correções no `index.html`.
