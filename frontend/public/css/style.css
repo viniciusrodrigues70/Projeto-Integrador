@@ -878,3 +878,125 @@ button:disabled { cursor: wait; opacity: .65; }
         padding: 25px 7% 30px;
     }
 }
+
+
+/* Dashboard compacto */
+.dashboard-page .content {
+    max-width: none;
+    padding: 24px clamp(20px, 2.8vw, 42px) 30px;
+}
+
+.dashboard-page .page-header {
+    margin-bottom: 16px;
+}
+
+.dashboard-page .page-header h1 {
+    font-size: 25px;
+}
+
+.dashboard-page .page-header p {
+    margin-top: 5px;
+}
+
+.dashboard-page .stats {
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.dashboard-page .card {
+    padding: 16px 18px;
+}
+
+.dashboard-page .stat-number {
+    margin: 8px 0 3px;
+    font-size: 25px;
+}
+
+.dashboard-page .grid-2 {
+    gap: 14px;
+    align-items: start;
+}
+
+.dashboard-page .panel {
+    padding: 17px 18px;
+    margin-bottom: 14px;
+}
+
+.dashboard-page .panel-header {
+    margin-bottom: 13px;
+}
+
+.dashboard-page .report-grid {
+    gap: 12px;
+}
+
+.dashboard-page .report-card {
+    padding: 17px 18px;
+}
+
+.dashboard-page .report-card p {
+    margin-bottom: 13px;
+}
+
+@media (max-width: 1050px) {
+    .dashboard-page .content {
+        padding: 22px 24px 28px;
+    }
+}
+
+@media (max-width: 760px) {
+    .dashboard-page .content {
+        padding: 20px 15px 24px;
+    }
+
+    .dashboard-page .grid-2 {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 760px) {
+    .dashboard-page .report-grid {
+        grid-template-columns: 1fr;
+    }
+}
+.password-field {
+    position: relative;
+    width: 100%;
+}
+.password-field input {
+    padding-right: 48px;
+}
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    transform: translateY(-50%);
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+}
+.password-toggle:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+.password-toggle:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+.password-toggle svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}

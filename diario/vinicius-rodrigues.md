@@ -7,3 +7,5 @@
 -> No dia 16/11 eu criei as tabelas Lote e Produto no banco de dados, além disso, coloquei alguns dados nelas também.
 
 -> No dia 17/11 eu modifiquei algumas tableas no banco de dados e corrigi alguns erros de sintaxe, ambas recomendadas e orientadas pelo Prof. Dr. Elvys.
+
+-> No dia 18/11 e 19/11 eu criei a conexão com o banco de dados, e depois corrigi alguns erros na conexão com ele. Além disso, eu com meus companheiros implementamos algumas funcionalidades, como logout e "esqueci a senha" (que ainda precisa ser finalizado).
