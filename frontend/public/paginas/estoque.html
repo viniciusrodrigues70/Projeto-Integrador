@@ -39,7 +39,8 @@
                 <div class="avatar">AD</div>
                 <div><strong>Administrador</strong><small>Área administrativa</small></div>
             </div>
-        <button type="button" class="btn btn-light auth-logout">Sair</button></header>
+            <button type="button" class="btn btn-light auth-logout">Sair</button>
+        </header>
 
         <section class="content">
 
@@ -47,6 +48,7 @@
                 <div class="eyebrow">Controle de alimentos</div>
                 <h1>Estoque e Lotes</h1>
                 <p>Monitore os produtos disponíveis e acompanhe a validade de cada lote.</p>
+                <a href="cadastro-estoque.html" class="btn">+ Registrar recebimento</a>
             </div>
 
             <div class="stats">
@@ -229,63 +231,6 @@
 
             </div>
 
-            <div class="form-card">
-
-                <h2>Registrar recebimento de doação</h2>
-
-                <div class="notice">
-                    Cada recebimento deve gerar um lote individual,
-                    permitindo controlar separadamente a quantidade
-                    e a validade dos alimentos.
-                </div>
-
-                <div class="form-grid">
-
-                    <div class="form-group">
-                        <label for="doador">Doador</label>
-                        <select id="doador">
-                            <option>Selecione o doador</option>
-                            <option>Mercado Esperança</option>
-                            <option>João Almeida</option>
-                            <option>Supermercado Aliança</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="produto">Produto</label>
-                        <select id="produto">
-                            <option>Selecione o produto</option>
-                            <option>Arroz tipo 1</option>
-                            <option>Feijão carioca</option>
-                            <option>Óleo de soja</option>
-                            <option>Leite em pó</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="quantidade">Quantidade recebida</label>
-                        <input type="number" id="quantidade" placeholder="Quantidade inicial">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="recebimento">Data de recebimento</label>
-                        <input type="date" id="recebimento">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="validade">Data de validade</label>
-                        <input type="date" id="validade">
-                    </div>
-
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary">Cancelar</button>
-                    <button type="button" class="btn">Registrar lote</button>
-                </div>
-
-            </div>
-
             <div class="notice">
                 <strong>Regra de controle:</strong>
                 a distribuição deve priorizar os lotes com validade
@@ -297,5 +242,6 @@
 
 </div>
 
-<script src="../js/auth.js"></script></body>
+<script src="../js/auth.js"></script>
+</body>
 </html>

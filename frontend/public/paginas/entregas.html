@@ -39,14 +39,16 @@
                 <div class="avatar">AD</div>
                 <div><strong>Administrador</strong><small>Área administrativa</small></div>
             </div>
-        <button type="button" class="btn btn-light auth-logout">Sair</button></header>
+            <button type="button" class="btn btn-light auth-logout">Sair</button>
+        </header>
 
         <section class="content">
 
             <div class="page-header">
                 <div class="eyebrow">Distribuição de alimentos</div>
                 <h1>Entregas de Cestas</h1>
-                <p>Registre a distribuição de alimentos e acompanhe o histórico das famílias beneficiadas.</p>
+                <p>Consulte e acompanhe o histórico das famílias beneficiadas.</p>
+                <a href="cadastro-entregas.html" class="btn">+ Registrar entrega</a>
             </div>
 
             <div class="stats">
@@ -67,119 +69,6 @@
                     <span class="stat-label">Famílias cadastradas</span>
                     <strong class="stat-number">248</strong>
                     <span class="stat-description">Total de beneficiários</span>
-                </div>
-
-            </div>
-
-            <div class="grid-2">
-
-                <div class="form-card">
-
-                    <h2>Registrar nova entrega</h2>
-
-                    <div class="form-grid">
-
-                        <div class="form-group full">
-                            <label for="familia">Família beneficiária</label>
-                            <select id="familia">
-                                <option>Selecione a família</option>
-                                <option>Maria Oliveira</option>
-                                <option>José Santos</option>
-                                <option>Ana Costa</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group full">
-                            <label for="data">Data da entrega</label>
-                            <input type="date" id="data">
-                        </div>
-
-                        <div class="form-group full">
-                            <label for="produto">Produto</label>
-                            <select id="produto">
-                                <option>Selecione o produto</option>
-                                <option>Arroz tipo 1</option>
-                                <option>Feijão carioca</option>
-                                <option>Óleo de soja</option>
-                                <option>Leite em pó</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group full">
-                            <label for="quantidade">Quantidade entregue</label>
-                            <input type="number" id="quantidade" placeholder="Informe a quantidade">
-                        </div>
-
-                        <div class="form-group full">
-                            <label for="observacao">Observações</label>
-                            <textarea id="observacao" placeholder="Informações adicionais sobre a entrega"></textarea>
-                        </div>
-
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary">Cancelar</button>
-                        <button type="button" class="btn">Registrar entrega</button>
-                    </div>
-
-                </div>
-
-                <div>
-
-                    <div class="panel">
-
-                        <div class="panel-header">
-                            <div>
-                                <h2>Informações da família</h2>
-                                <p>Dados da família beneficiária.</p>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Responsável</label>
-                            <input type="text" value="Maria Oliveira" readonly>
-                        </div>
-
-                        <div class="form-group" style="margin-top:15px;">
-                            <label>Número de integrantes</label>
-                            <input type="text" value="4 integrantes" readonly>
-                        </div>
-
-                        <div class="form-group" style="margin-top:15px;">
-                            <label>Última entrega</label>
-                            <input type="text" value="05/11/2026" readonly>
-                        </div>
-
-                        <br>
-
-                        <span class="status">Cadastro existente</span>
-
-                    </div>
-
-                    <div class="panel">
-
-                        <div class="panel-header">
-                            <div>
-                                <h2>Regras de distribuição</h2>
-                                <p>Critérios para realizar as entregas.</p>
-                            </div>
-                        </div>
-
-                        <div class="notice">
-                            Cada família poderá receber, inicialmente,
-                            uma cesta por mês, respeitando o limite
-                            configurado pela instituição.
-                        </div>
-
-                        <p style="font-size:11px;line-height:2;color:var(--muted);">
-                            • Verificar a disponibilidade dos alimentos.<br>
-                            • Não utilizar produtos vencidos.<br>
-                            • Priorizar lotes com validade mais próxima.<br>
-                            • Registrar a entrega e a baixa no estoque juntas.
-                        </p>
-
-                    </div>
-
                 </div>
 
             </div>
@@ -211,7 +100,6 @@
                 <div class="table-container">
 
                     <table>
-
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -225,7 +113,6 @@
                         </thead>
 
                         <tbody>
-
                             <tr>
                                 <td>001</td>
                                 <td>Maria Oliveira</td>
@@ -265,9 +152,7 @@
                                 <td>Entrega mensal</td>
                                 <td><span class="status">Concluída</span></td>
                             </tr>
-
                         </tbody>
-
                     </table>
 
                 </div>
@@ -280,5 +165,6 @@
 
 </div>
 
-<script src="../js/auth.js"></script></body>
+<script src="../js/auth.js"></script>
+</body>
 </html>

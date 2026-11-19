@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Produto | Banco Solidário</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="auth-protected">
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">✚</div>
+            <div>
+                <h2>Banco Solidário</h2>
+                <small>Gestão de alimentos</small>
+            </div>
+        </div>
+
+        <p class="nav-title">Menu principal</p>
+
+        <nav class="nav">
+            <a href="dashboard.html"><span class="nav-icon">⌂</span> Dashboard</a>
+            <a href="doadores.html"><span class="nav-icon">♡</span> Doadores</a>
+            <a href="produtos.html" class="active"><span class="nav-icon">▦</span> Produtos</a>
+            <a href="familias.html"><span class="nav-icon">♧</span> Famílias</a>
+            <a href="estoque.html"><span class="nav-icon">▤</span> Estoque</a>
+            <a href="entregas.html"><span class="nav-icon">⇧</span> Entregas</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            Banco de Alimentos<br>
+            Portal Administrativo
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <span class="breadcrumb">Banco Solidário / Produtos / Cadastro</span>
+
+            <div class="profile">
+                <div class="avatar">AD</div>
+                <div>
+                    <strong>Administrador</strong>
+                    <small>Área administrativa</small>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-light auth-logout">Sair</button>
+
+        </header>
+
+        <section class="content">
+
+            <div class="page-header">
+                <div class="eyebrow">Gerenciamento de cadastros</div>
+                <h1>Novo produto</h1>
+                <p>Preencha os campos abaixo para cadastrar um novo alimento.</p>
+            </div>
+
+            <div class="form-card">
+
+                <h2>Informações do produto</h2>
+
+                <form id="formProduto">
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="nome">Nome do produto</label>
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Nome do alimento"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="categoria">Categoria</label>
+
+                            <select id="categoria" name="categoria" required>
+                                <option value="">Selecione uma categoria</option>
+                                <option value="Grãos">Grãos</option>
+                                <option value="Massas">Massas</option>
+                                <option value="Laticínios">Laticínios</option>
+                                <option value="Óleos">Óleos</option>
+                                <option value="Enlatados">Enlatados</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descricao">Descrição</label>
+                            <input
+                                type="text"
+                                id="descricao"
+                                name="descricao"
+                                placeholder="Descrição do alimento"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="peso">Peso / Unidade de medida</label>
+                            <input
+                                type="text"
+                                id="peso"
+                                name="peso"
+                                placeholder="Ex.: 1 kg ou 900 ml"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantidade">Quantidade</label>
+                            <input
+                                type="number"
+                                id="quantidade"
+                                name="quantidade"
+                                placeholder="Quantidade"
+                                min="0"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <a href="produtos.html" class="btn btn-secondary">
+                            Cancelar
+                        </a>
+
+                        <button type="submit" class="btn">
+                            Salvar produto
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/auth.js"></script>
+
+<script>
+    document.getElementById("formProduto").addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const nome = document.getElementById("nome").value;
+        const categoria = document.getElementById("categoria").value;
+        const descricao = document.getElementById("descricao").value;
+        const peso = document.getElementById("peso").value;
+        const quantidade = document.getElementById("quantidade").value;
+
+        console.log({
+            nome,
+            categoria,
+            descricao,
+            peso,
+            quantidade
+        });
+
+        alert("Produto cadastrado com sucesso!");
+
+        window.location.href = "produtos.html";
+
+    });
+</script>
+
+</body>
+</html>
