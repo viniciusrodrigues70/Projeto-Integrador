@@ -5,7 +5,7 @@ module.exports=mysql.createPool({
  port: Number(process.env.DB_PORT) || 3306,
  database: process.env.DB_NAME || "Banco_Alimentos",
  user: process.env.DB_USER || "root",
- password: process.env.DB_PASSWORD || "",
+ password: process.env.DB_PASSWORD || "YES",
  waitForConnections: true,
  connectionLimit: 10,
  queueLimit: 0,
