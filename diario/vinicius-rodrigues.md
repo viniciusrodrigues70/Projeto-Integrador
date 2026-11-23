@@ -9,3 +9,5 @@
 -> No dia 17/11 eu modifiquei algumas tableas no banco de dados e corrigi alguns erros de sintaxe, ambas recomendadas e orientadas pelo Prof. Dr. Elvys.
 
 -> No dia 18/11 e 19/11 eu criei a conexão com o banco de dados, e depois corrigi alguns erros na conexão com ele. Além disso, eu com meus companheiros implementamos algumas funcionalidades, como logout e "esqueci a senha" (que ainda precisa ser finalizado).
+
+-> No dia 23/11 eu fiz algumas mudanças nas páginas html e criei uma nova chamada relatorios, essas mudanças eram para tornar o sistema melhor e com um fluxo mais agradável

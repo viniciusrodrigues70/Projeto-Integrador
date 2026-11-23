@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios | Banco Solidário</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="auth-protected">
+<div class="app">
+    <aside class="sidebar">
+        <div class="brand"><div class="brand-icon">✚</div><div><h2>Banco Solidário</h2><small>Gestão de alimentos</small></div></div>
+        <p class="nav-title">Menu principal</p>
+        <nav class="nav">
+            <a href="dashboard.html">⌂ Dashboard</a>
+            <a href="doadores.html">♡ Doadores</a>
+            <a href="produtos.html">▦ Produtos</a>
+            <a href="familias.html">♧ Famílias</a>
+            <a href="estoque.html">▤ Estoque</a>
+            <a href="entregas.html">⇧ Entregas</a>
+            <a href="relatorios.html" class="active">▥ Relatórios</a>
+        </nav>
+        <div class="sidebar-footer">Banco de Alimentos<br>Portal Administrativo</div>
+    </aside>
+    <main class="main">
+        <header class="topbar">
+            <span class="breadcrumb">Banco Solidário / Relatórios</span>
+            <div class="profile"><div class="avatar">AD</div><div><strong>Administrador</strong><small>Área administrativa</small></div></div>
+            <button type="button" class="btn btn-light auth-logout">Sair</button>
+        </header>
+        <section class="content">
+            <div class="page-header"><div class="eyebrow">Acompanhamento</div><h1>Relatórios</h1><p>Indicadores de estoque, doações e atendimento às famílias.</p></div>
+            <div id="relatorios-aviso" class="notice" role="status" aria-live="polite" hidden></div>
+
+            <div class="panel">
+                <div class="panel-header"><div><h2>Lotes a vencer nos próximos 30 dias</h2><p>Inclui apenas lotes com saldo disponível.</p></div></div>
+                <div class="table-container"><table><thead><tr><th>Lote</th><th>Produto</th><th>Doador</th><th>Saldo</th><th>Validade</th><th>Dias restantes</th></tr></thead><tbody id="relatorio-vencimentos"></tbody></table></div>
+            </div>
+
+            <div class="grid-2">
+                <div class="panel">
+                    <div class="panel-header"><div><h2>Doações por doador</h2><p>Quantidade recebida e número de lotes.</p></div></div>
+                    <div class="table-container"><table><thead><tr><th>Doador</th><th>Lotes</th><th>Quantidade</th></tr></thead><tbody id="relatorio-doadores"></tbody></table></div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header"><div><h2>Doações por mês</h2><p>Entradas registradas por mês.</p></div></div>
+                    <div class="table-container"><table><thead><tr><th>Mês</th><th>Lotes</th><th>Quantidade</th></tr></thead><tbody id="relatorio-doacoes-mes"></tbody></table></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header"><div><h2>Famílias atendidas por mês</h2><p>Famílias distintas e total de entregas.</p></div></div>
+                <div class="table-container"><table><thead><tr><th>Mês</th><th>Famílias atendidas</th><th>Entregas</th></tr></thead><tbody id="relatorio-familias-mes"></tbody></table></div>
+            </div>
+        </section>
+    </main>
+</div>
+<script src="../js/auth.js"></script>
+<script src="../js/relatorios.js"></script>
+</body>
+</html>
