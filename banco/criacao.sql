@@ -169,3 +169,36 @@ select f.nome_responsavel as nome, LPAD(RIGHT(f.cpf_responsavel, 7), 12, '*') AS
 from Familia f
 inner join Entrega_cesta ec
 on f.id_familia = ec.id_familia;
+
+
+CREATE TABLE IF NOT EXISTS RecuperacaoSenha (
+    id_recuperacao INT AUTO_INCREMENT PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    token_hash CHAR(64) NOT NULL UNIQUE,
+    expira_em DATETIME NOT NULL,
+    usado TINYINT(1) NOT NULL DEFAULT 0,
+    criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_recuperacao_usuario
+        FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario)
+        ON DELETE CASCADE
+);
+
+
+ALTER TABLE Item_Entrega
+    ADD COLUMN id_entrega INT NULL,
+    ADD CONSTRAINT fk_item_entrega_entrega
+        FOREIGN KEY (id_entrega) REFERENCES Entrega_cesta(id_entrega);
+
+CREATE INDEX idx_entrega_familia_data
+    ON Entrega_cesta (id_familia, data_entrega);
+
+CREATE INDEX idx_lote_produto_validade
+    ON Lote (id_produto, validade, id_lote);
+
+
+UPDATE Produto AS p
+SET p.quantidade = (
+    SELECT COALESCE(SUM(l.qtd_atual), 0)
+    FROM Lote AS l
+    WHERE l.id_produto = p.id_produto
+);
