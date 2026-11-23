@@ -85,6 +85,15 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="tipo_doador">Tipo de doador</label>
+                            <select id="tipo_doador" name="tipo_doador" required>
+                                <option value="">Selecione</option>
+                                <option value="PESSOA_FISICA">Pessoa física</option>
+                                <option value="EMPRESA/INSTITUICAO">Empresa / instituição</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="email">E-mail</label>
                             <input
                                 type="email"
@@ -131,26 +140,7 @@
 </div>
 
 <script src="../js/auth.js"></script>
-
-<script>
-    document.getElementById("formDoador").addEventListener("submit", function(event) {
-        event.preventDefault();
-
-        const nome = document.getElementById("nome").value;
-        const email = document.getElementById("email").value;
-        const telefone = document.getElementById("telefone").value;
-
-        console.log({
-            nome: nome,
-            email: email,
-            telefone: telefone
-        });
-
-        alert("Doador cadastrado com sucesso!");
-
-        window.location.href = "doadores.html";
-    });
-</script>
+<script src="../js/cadastro-doadores.js"></script>
 
 </body>
 </html>

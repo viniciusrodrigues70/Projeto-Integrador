@@ -114,7 +114,6 @@
                                 id="telefone"
                                 name="telefone"
                                 placeholder="(00) 00000-0000"
-                                required
                             >
                         </div>
 
@@ -154,32 +153,7 @@
 </div>
 
 <script src="../js/auth.js"></script>
-
-<script>
-    document.getElementById("formFamilia").addEventListener("submit", function(event) {
-
-        event.preventDefault();
-
-        const responsavel = document.getElementById("responsavel").value;
-        const cpf = document.getElementById("cpf").value;
-        const integrantes = document.getElementById("integrantes").value;
-        const telefone = document.getElementById("telefone").value;
-        const endereco = document.getElementById("endereco").value;
-
-        console.log({
-            responsavel,
-            cpf,
-            integrantes,
-            telefone,
-            endereco
-        });
-
-        alert("Família cadastrada com sucesso!");
-
-        window.location.href = "familias.html";
-
-    });
-</script>
+<script src="../js/cadastro-familias.js"></script>
 
 </body>
 </html>

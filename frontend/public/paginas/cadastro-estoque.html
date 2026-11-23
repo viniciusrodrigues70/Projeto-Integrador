@@ -68,26 +68,7 @@
                             <label for="doador">Doador</label>
                             <select id="doador" required>
                                 <option value="">Selecione o doador</option>
-                                <option value="Mercado Esperança">Mercado Esperança</option>
-                                <option value="João Almeida">João Almeida</option>
-                                <option value="Supermercado Aliança">Supermercado Aliança</option>
                             </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="produto">Produto</label>
-                            <select id="produto" required>
-                                <option value="">Selecione o produto</option>
-                                <option value="Arroz tipo 1">Arroz tipo 1</option>
-                                <option value="Feijão carioca">Feijão carioca</option>
-                                <option value="Óleo de soja">Óleo de soja</option>
-                                <option value="Leite em pó">Leite em pó</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="quantidade">Quantidade recebida</label>
-                            <input type="number" id="quantidade" min="1" placeholder="Quantidade inicial" required>
                         </div>
 
                         <div class="form-group">
@@ -95,16 +76,19 @@
                             <input type="date" id="recebimento" required>
                         </div>
 
-                        <div class="form-group">
-                            <label for="validade">Data de validade</label>
-                            <input type="date" id="validade" required>
+                        <div class="form-group full">
+                            <div class="panel-header">
+                                <div><h3>Produtos e lotes</h3><p>Cada produto gera um lote próprio com sua validade.</p></div>
+                                <button type="button" class="btn btn-secondary" id="adicionar-item-doacao">+ Adicionar produto</button>
+                            </div>
+                            <div id="itens-doacao"></div>
                         </div>
 
                     </div>
 
                     <div class="form-actions">
                         <a href="estoque.html" class="btn btn-secondary">Cancelar</a>
-                        <button type="submit" class="btn">Registrar lote</button>
+                        <button type="submit" class="btn">Registrar doação</button>
                     </div>
 
                 </form>
@@ -124,30 +108,7 @@
 
 <script src="../js/auth.js"></script>
 
-<script>
-document.getElementById("formEstoque").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const recebimento = {
-        doador: document.getElementById("doador").value,
-        produto: document.getElementById("produto").value,
-        quantidade: document.getElementById("quantidade").value,
-        dataRecebimento: document.getElementById("recebimento").value,
-        validade: document.getElementById("validade").value
-    };
-
-    if (recebimento.validade < recebimento.dataRecebimento) {
-        alert("A validade não pode ser anterior à data de recebimento.");
-        return;
-    }
-
-    console.log(recebimento);
-
-    alert("Lote registrado com sucesso!");
-
-    window.location.href = "estoque.html";
-});
-</script>
+<script src="../js/estoque.js"></script>
 
 </body>
 </html>

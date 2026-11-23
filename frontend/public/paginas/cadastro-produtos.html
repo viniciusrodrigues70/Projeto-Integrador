@@ -112,11 +112,12 @@
                         <div class="form-group">
                             <label for="peso">Peso / Unidade de medida</label>
                             <input
-                                type="text"
+                                type="number"
                                 id="peso"
                                 name="peso"
-                                placeholder="Ex.: 1 kg ou 900 ml"
-                                required
+                                placeholder="Ex.: 1,00"
+                                min="0"
+                                step="0.01"
                             >
                         </div>
 
@@ -126,10 +127,10 @@
                                 type="number"
                                 id="quantidade"
                                 name="quantidade"
-                                placeholder="Quantidade"
-                                min="0"
-                                required
+                                value="0"
+                                readonly
                             >
+                            <small>O estoque será atualizado ao registrar doações.</small>
                         </div>
 
                     </div>
@@ -157,32 +158,7 @@
 </div>
 
 <script src="../js/auth.js"></script>
-
-<script>
-    document.getElementById("formProduto").addEventListener("submit", function(event) {
-
-        event.preventDefault();
-
-        const nome = document.getElementById("nome").value;
-        const categoria = document.getElementById("categoria").value;
-        const descricao = document.getElementById("descricao").value;
-        const peso = document.getElementById("peso").value;
-        const quantidade = document.getElementById("quantidade").value;
-
-        console.log({
-            nome,
-            categoria,
-            descricao,
-            peso,
-            quantidade
-        });
-
-        alert("Produto cadastrado com sucesso!");
-
-        window.location.href = "produtos.html";
-
-    });
-</script>
+<script src="../js/cadastro-produtos.js"></script>
 
 </body>
 </html>

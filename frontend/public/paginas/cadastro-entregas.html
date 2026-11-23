@@ -75,20 +75,12 @@
                                 <input type="date" id="data" required>
                             </div>
 
-                            <div class="form-group full">
-                                <label for="produto">Produto</label>
-                                <select id="produto" required>
-                                    <option value="">Selecione o produto</option>
-                                    <option value="Arroz tipo 1">Arroz tipo 1</option>
-                                    <option value="Feijão carioca">Feijão carioca</option>
-                                    <option value="Óleo de soja">Óleo de soja</option>
-                                    <option value="Leite em pó">Leite em pó</option>
-                                </select>
+                        <div class="form-group full">
+                            <div class="panel-header">
+                                <div><h3>Itens da cesta</h3><p>Informe cada produto e quantidade. O estoque será baixado por validade mais próxima.</p></div>
+                                <button type="button" class="btn btn-secondary" id="adicionar-item-entrega">+ Adicionar produto</button>
                             </div>
-
-                            <div class="form-group full">
-                                <label for="quantidade">Quantidade entregue</label>
-                                <input type="number" id="quantidade" min="1" placeholder="Informe a quantidade" required>
+                            <div id="itens-entrega"></div>
                             </div>
 
                             <div class="form-group full">
@@ -120,17 +112,17 @@
 
                         <div class="form-group">
                             <label>Responsável</label>
-                            <input type="text" value="Maria Oliveira" readonly>
+                            <input type="text" id="info-responsavel" value="" placeholder="Selecione uma família" readonly>
                         </div>
 
                         <div class="form-group" style="margin-top:15px;">
                             <label>Número de integrantes</label>
-                            <input type="text" value="4 integrantes" readonly>
+                            <input type="text" id="info-integrantes" value="" placeholder="—" readonly>
                         </div>
 
                         <div class="form-group" style="margin-top:15px;">
                             <label>Última entrega</label>
-                            <input type="text" value="05/11/2026" readonly>
+                            <input type="text" id="info-ultima-entrega" value="" placeholder="Sem entregas registradas" readonly>
                         </div>
 
                         <br>
@@ -175,25 +167,7 @@
 
 <script src="../js/auth.js"></script>
 
-<script>
-document.getElementById("formEntrega").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const entrega = {
-        familia: document.getElementById("familia").value,
-        data: document.getElementById("data").value,
-        produto: document.getElementById("produto").value,
-        quantidade: document.getElementById("quantidade").value,
-        observacao: document.getElementById("observacao").value
-    };
-
-    console.log(entrega);
-
-    alert("Entrega registrada com sucesso!");
-
-    window.location.href = "entregas.html";
-});
-</script>
+<script src="../js/cadastro-entregas.js"></script>
 
 </body>
 </html>
