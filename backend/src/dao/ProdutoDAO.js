@@ -15,15 +15,23 @@ class ProdutoDAO {
       throw new Error("A categoria do produto é obrigatória.");
     }
 
-    if (produto.quantidade === undefined || produto.quantidade < 0) {
-      throw new Error("A quantidade deve ser maior ou igual a zero.");
+    if (Number(produto.quantidade) < 0 || !Number.isInteger(Number(produto.quantidade))) {
+      throw new Error("A quantidade deve ser um número inteiro igual ou maior que zero.");
+    }
+
+    if (
+      produto.peso !== null &&
+      produto.peso !== undefined &&
+      (isNaN(Number(produto.peso)) || Number(produto.peso) < 0)
+    ) {
+      throw new Error("O peso deve ser um número igual ou maior que zero.");
     }
   }
 
   async inserir(produto) {
     this.validar(produto);
 
-    const [resultado] = await database.query(
+    return database.query(
       `INSERT INTO Produto (nome, descricao, peso, categoria, quantidade)
        VALUES (?, ?, ?, ?, ?)`,
       [
@@ -31,11 +39,9 @@ class ProdutoDAO {
         produto.descricao,
         produto.peso ?? null,
         produto.categoria,
-        produto.quantidade,
+        Number(produto.quantidade),
       ]
     );
-
-    return resultado.insertId;
   }
 
   async listar() {
@@ -68,7 +74,7 @@ class ProdutoDAO {
         produto.descricao,
         produto.peso ?? null,
         produto.categoria,
-        produto.quantidade,
+        Number(produto.quantidade),
         id,
       ]
     );
