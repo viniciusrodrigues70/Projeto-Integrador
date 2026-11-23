@@ -18,6 +18,20 @@ class ItemEntregaDAO {
         }
     }
 
+    async criar(item, connection) {
+        this.validar(item);
+
+        return connection.execute(
+            `INSERT INTO Item_Entrega (id_entrega, id_produto, quantidade)
+            VALUES (?, ?, ?)`,
+            [
+                item.id_entrega,
+                item.id_produto,
+                Number(item.quantidade)
+            ]
+        );
+    }
+
     async inserir(item) {
         this.validar(item);
 
