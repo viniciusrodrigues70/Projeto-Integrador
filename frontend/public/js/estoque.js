@@ -152,7 +152,7 @@
                     itens: itens
                 };
 
-                const resposta = await BancoAuth.api("/lotes/doacoes", {
+                const resposta = await BancoAuth.api("/lotes", {
                     method: "POST",
                     body: JSON.stringify(dados)
                 });
@@ -186,36 +186,68 @@
     if (tabelas.length >= 2) {
         const corpoProdutos = tabelas[0].querySelector("tbody");
         const corpoLotes = tabelas[1].querySelector("tbody");
+        const buscas = document.querySelectorAll('.toolbar input[type="search"]');
+        const filtroSituacao = document.querySelector(".toolbar select");
+
+        function normalizar(valor) {
+            return String(valor || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
+        }
+
+        function filtrarTabela(corpo, termo, situacao = "") {
+            for (const linha of corpo.rows) {
+                const correspondeTexto = normalizar(linha.textContent).includes(normalizar(termo));
+                const correspondeSituacao = !situacao || normalizar(situacao) === "todas as situacoes" ||
+                    normalizar(linha.cells[linha.cells.length - 1]?.textContent).includes(normalizar(situacao));
+                linha.hidden = !(correspondeTexto && correspondeSituacao);
+            }
+        }
+
+        buscas[0]?.addEventListener("input", function () {
+            filtrarTabela(corpoProdutos, buscas[0].value);
+        });
+        buscas[1]?.addEventListener("input", function () {
+            filtrarTabela(corpoLotes, buscas[1].value, filtroSituacao?.value);
+        });
+        filtroSituacao?.addEventListener("change", function () {
+            filtrarTabela(corpoLotes, buscas[1]?.value, filtroSituacao.value);
+        });
 
         corpoProdutos.replaceChildren();
         corpoLotes.replaceChildren();
 
         async function carregarEstoque() {
             try {
-                const resultados = await Promise.all([
-                    BancoAuth.api("/lotes/estoque/produtos"),
-                    BancoAuth.api("/lotes")
-                ]);
-
-                const produtos = resultados[0];
-                const lotes = resultados[1];
+                const estoque = await BancoAuth.api("/estoque");
+                const produtos = estoque.produtos;
+                const lotes = estoque.lotes;
 
                 corpoProdutos.replaceChildren();
 
                 for (const produto of produtos) {
                     const linha = document.createElement("tr");
-
                     const valores = [
-                        produto.id_produto,
-                        produto.produto,
-                        produto.quantidade_total,
-                        produto.validades.join(", ") || "—"
+                        produto.nome,
+                        produto.categoria,
+                        produto.quantidade,
+                        "Unidades",
+                        Number(produto.quantidade) > 0 ? "Disponível" : "Sem estoque"
                     ];
 
-                    for (const valor of valores) {
+                    for (let i = 0; i < valores.length; i++) {
                         const celula = document.createElement("td");
+                        const valor = valores[i];
 
-                        celula.textContent = String(valor ?? "—");
+                        if (i === valores.length - 1) {
+                            const status = document.createElement("span");
+                            status.className = Number(produto.quantidade) > 0 ? "status" : "status danger";
+                            status.textContent = valor;
+                            celula.appendChild(status);
+                        } else {
+                            celula.textContent = String(valor ?? "—");
+                        }
                         linha.appendChild(celula);
                     }
 
@@ -235,11 +267,14 @@
                 for (const lote of lotes) {
                     const linha = document.createElement("tr");
                     const expirado = lote.validade < hojeISO;
+                    const diasRestantes = Math.ceil((new Date(`${lote.validade}T00:00:00`) - new Date(`${hojeISO}T00:00:00`)) / 86400000);
 
                     let situacao;
 
                     if (expirado) {
                         situacao = "Vencido";
+                    } else if (Number(lote.qtd_atual) > 0 && diasRestantes <= 30) {
+                        situacao = "Próximo do vencimento";
                     } else if (lote.qtd_atual > 0) {
                         situacao = "Disponível";
                     } else {
@@ -264,7 +299,9 @@
                         if (i === valores.length - 1) {
                             const etiqueta = document.createElement("span");
 
-                            etiqueta.className = expirado ? "status danger" : "status";
+                            etiqueta.className = expirado
+                                ? "status danger"
+                                : situacao === "Próximo do vencimento" ? "status warning" : "status";
                             etiqueta.textContent = String(valor);
 
                             celula.appendChild(etiqueta);
@@ -277,6 +314,9 @@
 
                     corpoLotes.appendChild(linha);
                 }
+
+                filtrarTabela(corpoProdutos, buscas[0]?.value);
+                filtrarTabela(corpoLotes, buscas[1]?.value, filtroSituacao?.value);
 
             } catch (error) {
                 const status = criarStatus(tabelas[0]);
@@ -294,7 +334,7 @@
                     const celula = document.createElement("td");
 
                     if (corpo === corpoProdutos) {
-                        celula.colSpan = 4;
+                        celula.colSpan = 5;
                     } else {
                         celula.colSpan = 8;
                     }

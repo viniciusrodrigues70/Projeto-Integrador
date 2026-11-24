@@ -1,5 +1,6 @@
 (function () {
     const tbody = document.querySelector(".table-container tbody");
+    const busca = document.querySelector('.toolbar input[type="search"]');
 
     if (!tbody) {
         return;
@@ -13,6 +14,20 @@
 
     const painel = tbody.closest(".panel");
     const tabela = tbody.closest(".table-container");
+
+    function normalizar(valor) {
+        return String(valor || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+    }
+
+    function filtrar() {
+        const termo = normalizar(busca?.value);
+        for (const linha of tbody.rows) {
+            linha.hidden = !normalizar(linha.textContent).includes(termo);
+        }
+    }
 
     painel?.insertBefore(aviso, tabela);
 
@@ -73,11 +88,15 @@
                 tbody.appendChild(linha);
             }
 
+            filtrar();
+
         } catch (error) {
             aviso.textContent = `Não foi possível carregar as famílias: ${error.message}`;
             aviso.hidden = false;
         }
     }
+
+    busca?.addEventListener("input", filtrar);
 
     async function mostrarHistorico(familia) {
         const dialog = document.createElement("dialog");
@@ -117,7 +136,7 @@
 
         try {
             const entregas = await BancoAuth.api(
-                `/entregas/familia/${familia.id_familia}/historico`
+                `/entregas/familia/${familia.id_familia}`
             );
 
             if (entregas.length > 0) {

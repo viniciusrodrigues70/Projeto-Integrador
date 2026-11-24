@@ -104,18 +104,6 @@ insert into Lote (validade, qtd_inicial, qtd_atual, data_recebimento, id_produto
     ('2027-07-18', 55, 45, '2026-11-14', 9, 8),
     ('2027-10-05', 65, 50, '2026-11-15', 10, 9);
 
-insert into Item_Entrega (id_produto, quantidade) values
-    (1, 10),
-    (2, 15),
-    (3, 20),
-    (4, 12),
-    (5, 8),
-    (6, 25),
-    (7, 10),
-    (8, 30),
-    (9, 18),
-    (10, 14);
-
 select l.id_lote, p.nome as produto, d.nome as doador, l.qtd_inicial, l.qtd_atual, date_format(l.validade, '%d/%m/%Y') as validade 
 from Lote as l
 inner join Produto as p
@@ -185,9 +173,21 @@ CREATE TABLE IF NOT EXISTS RecuperacaoSenha (
 
 
 ALTER TABLE Item_Entrega
-    ADD COLUMN id_entrega INT NULL,
+    ADD COLUMN id_entrega INT NOT NULL,
     ADD CONSTRAINT fk_item_entrega_entrega
         FOREIGN KEY (id_entrega) REFERENCES Entrega_cesta(id_entrega);
+
+insert into Item_Entrega (id_entrega, id_produto, quantidade) values
+    ((select id_entrega from Entrega_cesta where id_familia = 1 and data_entrega = '2026-10-01'), 1, 10),
+    ((select id_entrega from Entrega_cesta where id_familia = 1 and data_entrega = '2026-10-01'), 2, 15),
+    ((select id_entrega from Entrega_cesta where id_familia = 1 and data_entrega = '2026-10-01'), 3, 20),
+    ((select id_entrega from Entrega_cesta where id_familia = 1 and data_entrega = '2026-10-01'), 4, 12),
+    ((select id_entrega from Entrega_cesta where id_familia = 2 and data_entrega = '2026-10-02'), 5, 8),
+    ((select id_entrega from Entrega_cesta where id_familia = 2 and data_entrega = '2026-10-02'), 6, 25),
+    ((select id_entrega from Entrega_cesta where id_familia = 2 and data_entrega = '2026-10-02'), 7, 10),
+    ((select id_entrega from Entrega_cesta where id_familia = 3 and data_entrega = '2026-10-03'), 8, 30),
+    ((select id_entrega from Entrega_cesta where id_familia = 3 and data_entrega = '2026-10-03'), 9, 18),
+    ((select id_entrega from Entrega_cesta where id_familia = 3 and data_entrega = '2026-10-03'), 10, 14);
 
 CREATE INDEX idx_entrega_familia_data
     ON Entrega_cesta (id_familia, data_entrega);

@@ -4,22 +4,22 @@
 
     const config = [
         [
-            "/relatorios/lotes-vencendo?dias=30",
+            "/relatorios/vencimentos",
             "relatorio-vencimentos",
             ["id_lote", "produto", "doador", "quantidade", "validade", "dias_restantes"]
         ],
         [
-            "/relatorios/doacoes-por-doador",
+            "/relatorios/doadores",
             "relatorio-doadores",
             ["doador", "lotes", "quantidade_recebida"]
         ],
         [
-            "/relatorios/doacoes-por-mes",
+            "/relatorios/doacoes-mes",
             "relatorio-doacoes-mes",
             ["mes", "lotes", "quantidade_recebida"]
         ],
         [
-            "/relatorios/familias-atendidas-por-mes",
+            "/relatorios/familias-mes",
             "relatorio-familias-mes",
             ["mes", "familias_atendidas", "entregas"]
         ]

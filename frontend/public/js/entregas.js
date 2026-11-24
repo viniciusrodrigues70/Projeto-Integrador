@@ -216,7 +216,7 @@
                     id_entrega: entrega.id_entrega ?? entrega.id,
                     familia: entrega.familia ?? entrega.nome_responsavel ?? entrega.nome_familia ?? "Família",
                     data_entrega: entrega.data_entrega ?? entrega.data,
-                    produto: entrega.produto ?? entrega.produtos ?? "—",
+                    produto: entrega.itens ?? entrega.produto ?? entrega.produtos ?? "—",
                     quantidade: entrega.quantidade ?? "—",
                     observacao: entrega.observacao ?? "—",
                     situacao: entrega.situacao ?? "Concluída"
@@ -251,13 +251,23 @@
 
             <form id="nova-entrega" class="form-grid">
                 <div class="form-group">
-                    <label for="entrega-familia">ID da família</label>
-                    <input id="entrega-familia" name="id_familia" type="number" min="1" required>
+                    <label for="entrega-familia">Família</label>
+                    <select id="entrega-familia" name="id_familia" required>
+                        <option value="">Carregando famílias...</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
                     <label for="entrega-data">Data</label>
                     <input id="entrega-data" name="data_entrega" type="date" required>
+                </div>
+
+                <div class="form-group full">
+                    <div class="panel-header">
+                        <label>Produtos da cesta</label>
+                        <button type="button" class="btn btn-secondary" id="adicionar-produto-entrega" disabled>Carregando produtos...</button>
+                    </div>
+                    <div id="itens-entrega-modal"></div>
                 </div>
 
                 <div class="form-group full">
@@ -302,6 +312,66 @@
         });
 
         const form = dialog.querySelector("#nova-entrega");
+        const familiaSelect = form.elements.id_familia;
+        const itensContainer = dialog.querySelector("#itens-entrega-modal");
+
+        function adicionarItem(produtos) {
+            const linha = document.createElement("div");
+            linha.className = "form-grid item-entrega";
+            linha.innerHTML = `
+                <div class="form-group">
+                    <label>Produto</label>
+                    <select class="produto-entrega" required>
+                        <option value="">Selecione o produto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input class="quantidade-entrega" type="number" min="1" step="1" required>
+                </div>
+                <div class="form-group form-actions">
+                    <button type="button" class="btn btn-secondary remover-item-entrega">Remover</button>
+                </div>
+            `;
+
+            const select = linha.querySelector(".produto-entrega");
+            for (const produto of produtos) {
+                select.add(new Option(produto.nome, produto.id_produto));
+            }
+
+            linha.querySelector(".remover-item-entrega").addEventListener("click", function () {
+                if (itensContainer.children.length > 1) {
+                    linha.remove();
+                }
+            });
+
+            itensContainer.appendChild(linha);
+        }
+
+        BancoAuth.api("/familias").then(function (familias) {
+            familiaSelect.replaceChildren(new Option("Selecione a família", ""));
+            for (const familia of familias) {
+                familiaSelect.add(new Option(familia.nome_responsavel, familia.id_familia));
+            }
+        }).catch(function (error) {
+            const aviso = dialog.querySelector("#entrega-form-aviso");
+            aviso.className = "auth-message error";
+            aviso.textContent = `Não foi possível carregar as famílias. ${error.message}`;
+        });
+
+        BancoAuth.api("/produtos").then(function (produtos) {
+            const adicionar = dialog.querySelector("#adicionar-produto-entrega");
+            adicionar.disabled = false;
+            adicionar.textContent = "+ Adicionar produto";
+            adicionar.addEventListener("click", function () {
+                adicionarItem(produtos);
+            });
+            adicionarItem(produtos);
+        }).catch(function (error) {
+            const aviso = dialog.querySelector("#entrega-form-aviso");
+            aviso.className = "auth-message error";
+            aviso.textContent = `Não foi possível carregar os produtos. ${error.message}`;
+        });
 
         form.addEventListener("submit", async function (event) {
             event.preventDefault();
@@ -315,7 +385,13 @@
                 const dados = {
                     id_familia: Number(form.elements.id_familia.value),
                     data_entrega: form.elements.data_entrega.value,
-                    observacao: form.elements.observacao.value.trim()
+                    observacao: form.elements.observacao.value.trim(),
+                    itens: Array.from(itensContainer.querySelectorAll(".item-entrega"), function (linha) {
+                        return {
+                            id_produto: Number(linha.querySelector(".produto-entrega").value),
+                            quantidade: Number(linha.querySelector(".quantidade-entrega").value)
+                        };
+                    })
                 };
 
                 await BancoAuth.api(API_PATH, {

@@ -206,6 +206,58 @@
 </div>
 
 <script src="../js/auth.js"></script>
-<script src="../js/dashboard.js"></script>
+<script>
+    (async function () {
+        try {
+            const dados = await BancoAuth.api("/relatorios/dashboard");
+            const resumo = dados.resumo || {};
+            const indicadores = [
+                resumo.familias,
+                resumo.doadores,
+                resumo.produtos,
+                resumo.entregas_mes
+            ];
+
+            document.querySelectorAll(".stats .stat-number").forEach(function (elemento, indice) {
+                elemento.textContent = String(Number(indicadores[indice] || 0));
+            });
+
+            const validade = document.querySelector(".grid-2 .panel .stat-number");
+            if (validade) {
+                validade.textContent = String(Number(resumo.lotes_vencendo || 0));
+            }
+
+            const corpo = document.querySelector(".grid-2 .table-container tbody");
+            if (corpo) {
+                corpo.replaceChildren();
+                for (const movimentacao of dados.movimentacoes || []) {
+                    const linha = document.createElement("tr");
+                    const tipo = document.createElement("td");
+                    const etiqueta = document.createElement("span");
+                    etiqueta.className = movimentacao.tipo === "Entrega" ? "status warning" : "status";
+                    etiqueta.textContent = movimentacao.tipo || "—";
+                    tipo.appendChild(etiqueta);
+
+                    const descricao = document.createElement("td");
+                    descricao.textContent = movimentacao.descricao || "—";
+
+                    const data = document.createElement("td");
+                    const dataISO = String(movimentacao.data || "").slice(0, 10);
+                    data.textContent = /^\d{4}-\d{2}-\d{2}$/.test(dataISO)
+                        ? dataISO.split("-").reverse().join("/")
+                        : dataISO || "—";
+
+                    linha.append(tipo, descricao, data);
+                    corpo.appendChild(linha);
+                }
+            }
+        } catch (error) {
+            const aviso = document.createElement("p");
+            aviso.className = "notice error";
+            aviso.textContent = `Não foi possível carregar os indicadores. ${error.message}`;
+            document.querySelector(".content")?.prepend(aviso);
+        }
+    })();
+</script>
 </body>
 </html>

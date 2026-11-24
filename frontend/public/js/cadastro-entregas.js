@@ -130,7 +130,7 @@
 
         try {
             const historico = await BancoAuth.api(
-                `/entregas/familia/${familia.id_familia}/historico`
+                `/entregas/familia/${familia.id_familia}`
             );
 
             if (historico.length > 0) {
