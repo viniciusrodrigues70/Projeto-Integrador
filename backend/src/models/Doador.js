@@ -6,6 +6,16 @@ class Doador {
   #tipo_doador;
 
   constructor(id_doador, nome, email, telefone, tipo_doador) {
+    if (id_doador && typeof id_doador === "object") {
+      const registro = id_doador;
+      this.#id = registro.id_doador;
+      this.#nome = registro.nome;
+      this.#email = registro.email;
+      this.#telefone = registro.telefone;
+      this.#tipo_doador = registro.tipo_doador;
+      return;
+    }
+
     this.#id = id_doador;
     this.#nome = nome;
     this.#email = email;
