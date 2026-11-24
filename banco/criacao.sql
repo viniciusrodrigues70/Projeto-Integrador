@@ -190,11 +190,7 @@ insert into Item_Entrega (id_entrega, id_produto, quantidade) values
     ((select id_entrega from Entrega_cesta where id_familia = 3 and data_entrega = '2026-10-03'), 10, 14);
 
 CREATE VIEW Estoque_Produto AS
-SELECT
-    p.id_produto,
-    p.nome,
-    p.categoria,
-    COALESCE(SUM(l.qtd_atual), 0) AS quantidade
+SELECT p.id_produto, p.nome, p.categoria, COALESCE(SUM(l.qtd_atual), 0) AS quantidade
 FROM Produto AS p
 LEFT JOIN Lote AS l
     ON p.id_produto = l.id_produto
