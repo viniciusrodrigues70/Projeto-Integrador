@@ -1,4 +1,3 @@
-
 (function () {
     const form = document.getElementById("formFamilia");
 
@@ -13,6 +12,18 @@
     status.setAttribute("aria-live", "polite");
 
     form.prepend(status);
+
+    const integrantes = form.elements.integrantes;
+    const integrantesExato = document.getElementById("integrantes-exato");
+
+    integrantes.addEventListener("change", function () {
+        const precisaInformarQuantidade = integrantes.value === "mais";
+        integrantesExato.hidden = !precisaInformarQuantidade;
+        integrantesExato.required = precisaInformarQuantidade;
+        if (!precisaInformarQuantidade) {
+            integrantesExato.value = "";
+        }
+    });
 
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -30,7 +41,9 @@
                 body: JSON.stringify({
                     nome_responsavel: form.elements.responsavel.value.trim(),
                     cpf_responsavel: form.elements.cpf.value,
-                    num_integrantes: Number(form.elements.integrantes.value),
+                    num_integrantes: integrantes.value === "mais"
+                        ? Number(integrantesExato.value)
+                        : Number(integrantes.value),
                     telefone: form.elements.telefone.value.trim() || null,
                     endereco: form.elements.endereco.value.trim()
                 })

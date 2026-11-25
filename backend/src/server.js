@@ -23,7 +23,8 @@ app.use(
     cors({
         origin: process.env.FRONTEND_URL
             ? process.env.FRONTEND_URL.split(",").map(x => x.trim())
-            : true
+            : true,
+        credentials: true
     })
 );
 
@@ -41,13 +42,17 @@ app.use((e, req, res, next) => {
     console.error(e);
 
     const s = e.status || (
-        e.code === "ER_DUP_ENTRY" ? 409 : 500
+        ["ER_DUP_ENTRY", "ER_ROW_IS_REFERENCED_2", "ER_NO_REFERENCED_ROW_2"].includes(e.code)
+            ? 409
+            : 500
     );
 
     res.status(s).json({
         mensagem: e.code === "ER_DUP_ENTRY"
-            ? "Já existe uma conta com este e-mail."
-            : s === 500
+            ? "Já existe um cadastro com esse valor."
+            : ["ER_ROW_IS_REFERENCED_2", "ER_NO_REFERENCED_ROW_2"].includes(e.code)
+                ? "Não é possível remover este registro porque ele está vinculado a outros dados."
+                : s === 500
                 ? "Não foi possível concluir a solicitação."
                 : e.message
     });
@@ -71,4 +76,4 @@ const port = Number(process.env.PORT) || 3000;
     );
 
     process.exit(1);
-});
+})

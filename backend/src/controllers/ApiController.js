@@ -15,23 +15,44 @@ function validarId(id) {
 
 function validarFamilia(familia) {
   if (!familia.nome_responsavel?.trim()) {
-    throw new Error("O nome do responsável é obrigatório.");
+    const erro = new Error("O nome do responsável é obrigatório.");
+    erro.status = 400;
+    throw erro;
   }
 
-  if (!familia.cpf_responsavel?.trim()) {
-    throw new Error("O CPF do responsável é obrigatório.");
+  if (!/^\d{3}\.\d{3}\.\d{3}-\d{2}$/.test(familia.cpf_responsavel?.trim() || "")) {
+    const erro = new Error("Informe o CPF no formato 000.000.000-00.");
+    erro.status = 400;
+    throw erro;
   }
 
   if (
     !Number.isInteger(Number(familia.num_integrantes)) ||
     Number(familia.num_integrantes) < 1
   ) {
-    throw new Error("Informe uma quantidade válida de integrantes.");
+    const erro = new Error("Informe uma quantidade válida de integrantes.");
+    erro.status = 400;
+    throw erro;
   }
 
   if (!familia.endereco?.trim()) {
-    throw new Error("O endereço é obrigatório.");
+    const erro = new Error("O endereço é obrigatório.");
+    erro.status = 400;
+    throw erro;
   }
+
+  if (familia.nome_responsavel.trim().length > 200 || familia.endereco.trim().length > 260) {
+    const erro = new Error("Nome ou endereço ultrapassam o tamanho permitido.");
+    erro.status = 400;
+    throw erro;
+  }
+
+  if (familia.telefone && familia.telefone.trim().length > 20) {
+    const erro = new Error("O telefone deve ter no máximo 20 caracteres.");
+    erro.status = 400;
+    throw erro;
+  }
+
 }
 
 module.exports = {
@@ -58,6 +79,11 @@ module.exports = {
         return res.status(400).json({ mensagem: "ID de produto inválido." });
       }
 
+      const existente = await produtoDAO.buscarPorId(req.params.id);
+      if (!existente) {
+        return res.status(404).json({ mensagem: "Produto não encontrado." });
+      }
+
       await produtoDAO.editar(req.params.id, req.body);
       res.json({ mensagem: "Produto atualizado." });
     } catch (erro) {
@@ -71,7 +97,10 @@ module.exports = {
         return res.status(400).json({ mensagem: "ID de produto inválido." });
       }
 
-      await produtoDAO.remover(req.params.id);
+      const [resultado] = await produtoDAO.remover(req.params.id);
+      if (!resultado.affectedRows) {
+        return res.status(404).json({ mensagem: "Produto não encontrado." });
+      }
       res.json({ mensagem: "Produto removido." });
     } catch (erro) {
       next(erro);
@@ -90,6 +119,42 @@ module.exports = {
     try {
       await doadorDAO.criar(req.body);
       res.status(201).json({ mensagem: "Doador cadastrado." });
+    } catch (erro) {
+      next(erro);
+    }
+  },
+
+  async editarDoador(req, res, next) {
+    try {
+      if (!validarId(req.params.id)) {
+        return res.status(400).json({ mensagem: "ID de doador inválido." });
+      }
+
+      const existente = await doadorDAO.buscarPorId(req.params.id);
+      if (!existente) {
+        return res.status(404).json({ mensagem: "Doador não encontrado." });
+      }
+
+      await doadorDAO.atualizar(req.params.id, req.body);
+
+      res.json({ mensagem: "Doador atualizado." });
+    } catch (erro) {
+      next(erro);
+    }
+  },
+
+  async removerDoador(req, res, next) {
+    try {
+      if (!validarId(req.params.id)) {
+        return res.status(400).json({ mensagem: "ID de doador inválido." });
+      }
+
+      const removido = await doadorDAO.excluir(req.params.id);
+      if (!removido) {
+        return res.status(404).json({ mensagem: "Doador não encontrado." });
+      }
+
+      res.json({ mensagem: "Doador removido." });
     } catch (erro) {
       next(erro);
     }
@@ -138,6 +203,16 @@ module.exports = {
       }
 
       validarFamilia(req.body);
+      const familiaAtual = await familiaDAO.buscarPorId(req.params.id);
+      if (!familiaAtual) {
+        return res.status(404).json({ mensagem: "Família não encontrada." });
+      }
+
+      const existente = await familiaDAO.buscarPorCPF(req.body.cpf_responsavel.trim());
+      if (existente && Number(existente.id_familia) !== Number(req.params.id)) {
+        return res.status(409).json({ mensagem: "Já existe uma família com esse CPF." });
+      }
+
       await familiaDAO.atualizar(req.params.id, req.body);
       res.json({ mensagem: "Família atualizada." });
     } catch (erro) {
@@ -151,7 +226,10 @@ module.exports = {
         return res.status(400).json({ mensagem: "ID de família inválido." });
       }
 
-      await familiaDAO.excluir(req.params.id);
+      const removida = await familiaDAO.excluir(req.params.id);
+      if (!removida) {
+        return res.status(404).json({ mensagem: "Família não encontrada." });
+      }
       res.json({ mensagem: "Família removida." });
     } catch (erro) {
       next(erro);
@@ -309,4 +387,4 @@ module.exports = {
       next(erro);
     }
   },
-}; 
+};

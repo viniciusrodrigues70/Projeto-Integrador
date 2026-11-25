@@ -2,21 +2,31 @@ const database = require("../config/database");
 const Produto = require("../models/Produto");
 
 class ProdutoDAO {
+  erroValidacao(mensagem) {
+    const erro = new Error(mensagem);
+    erro.status = 400;
+    return erro;
+  }
+
   validar(produto) {
     if (!produto.nome?.trim()) {
-      throw new Error("O nome do produto é obrigatório.");
+      throw this.erroValidacao("O nome do produto é obrigatório.");
     }
 
     if (!produto.descricao?.trim()) {
-      throw new Error("A descrição do produto é obrigatória.");
+      throw this.erroValidacao("A descrição do produto é obrigatória.");
     }
 
     if (!produto.categoria?.trim()) {
-      throw new Error("A categoria do produto é obrigatória.");
+      throw this.erroValidacao("Selecione uma categoria para o produto.");
+    }
+
+    if (produto.nome.trim().length > 100 || produto.descricao.trim().length > 300 || produto.categoria.trim().length > 50) {
+      throw this.erroValidacao("Nome, descrição ou categoria ultrapassam o tamanho permitido.");
     }
 
     if (Number(produto.quantidade) < 0 || !Number.isInteger(Number(produto.quantidade))) {
-      throw new Error("A quantidade deve ser um número inteiro igual ou maior que zero.");
+      throw this.erroValidacao("A quantidade deve ser um número inteiro igual ou maior que zero.");
     }
 
     if (
@@ -24,7 +34,11 @@ class ProdutoDAO {
       produto.peso !== undefined &&
       (isNaN(Number(produto.peso)) || Number(produto.peso) < 0)
     ) {
-      throw new Error("O peso deve ser um número igual ou maior que zero.");
+      throw this.erroValidacao("O peso deve ser um número igual ou maior que zero.");
+    }
+
+    if (produto.peso !== null && produto.peso !== undefined && Number(produto.peso) > 999.99) {
+      throw this.erroValidacao("O peso deve ser menor que 1000.");
     }
   }
 
@@ -60,6 +74,15 @@ class ProdutoDAO {
           p.quantidade
         )
     );
+  }
+
+  async buscarPorId(id) {
+    const [linhas] = await database.query(
+      "SELECT * FROM Produto WHERE id_produto = ? LIMIT 1",
+      [id]
+    );
+
+    return linhas[0] || null;
   }
 
   async editar(id, produto) {

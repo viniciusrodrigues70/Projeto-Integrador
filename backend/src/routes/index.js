@@ -17,6 +17,8 @@ router.delete("/produtos/:id", api.removerProduto);
 
 router.get("/doadores", api.listarDoadores);
 router.post("/doadores", api.criarDoador);
+router.put("/doadores/:id", api.editarDoador);
+router.delete("/doadores/:id", api.removerDoador);
 
 router.get("/familias", api.listarFamilias);
 router.post("/familias", api.criarFamilia);

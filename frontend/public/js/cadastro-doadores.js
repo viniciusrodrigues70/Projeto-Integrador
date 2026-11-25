@@ -1,4 +1,3 @@
-
 (function () {
     const form = document.getElementById("formDoador");
 
@@ -26,6 +25,7 @@
 
         try {
             const dados = Object.fromEntries(new FormData(form));
+                delete dados.confirmacao;
 
             const resposta = await BancoAuth.api("/doadores", {
                 method: "POST",

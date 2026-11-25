@@ -7,3 +7,7 @@
 - No dia **11 de novembro**, eu, **Vitor Miguel Rocha Calheiros**, utilizei o ChatGPT para me mostrar exemplos de paginação para utilizar como base para criação das paginações SEM copiar o html e o css.
 
 - No dia **23 de novembro de 2026**, eu, **Vinícius Rodrigues da Silva**, usei o **ChatGPT** para me auxiliar na criação da tela dos relatórios, que se encontra no caminho frontend/public/paginas/relatorios.html. O uso foi raso e utilizado como base para me guiar.
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+- **Declaramos que todo o frontend deste trabalho foi feito com auxílio de ferramentas de Inteligência Artificial, visto que o nosso professor de programação web permitiu e recomendou!!**

@@ -1,4 +1,3 @@
-
 (function () {
     const API_PATH = "/doadores";
     const tbody = document.querySelector(".table-container tbody");
@@ -72,7 +71,7 @@
             const tr = document.createElement("tr");
             const td = document.createElement("td");
 
-            td.colSpan = 5;
+            td.colSpan = 6;
             td.className = "empty-state";
             td.textContent = "Nenhum doador corresponde à busca.";
 
@@ -110,6 +109,25 @@
                     tr.appendChild(td);
                 }
 
+                const acoes = document.createElement("td");
+                const editar = document.createElement("button");
+                editar.type = "button";
+                editar.className = "btn btn-secondary";
+                editar.textContent = "Editar";
+                editar.addEventListener("click", function () {
+                    abrirCadastro(doador);
+                });
+
+                const remover = document.createElement("button");
+                remover.type = "button";
+                remover.className = "btn btn-secondary";
+                remover.textContent = "Remover";
+                remover.addEventListener("click", function () {
+                    removerDoador(doador);
+                });
+
+                acoes.append(editar, remover);
+                tr.appendChild(acoes);
                 tbody.appendChild(tr);
             }
         }
@@ -153,7 +171,7 @@
         }
     }
 
-    function abrirCadastro() {
+    function abrirCadastro(doador = null) {
         const dialog = document.createElement("dialog");
 
         dialog.style.cssText = "width:min(520px,calc(100% - 32px));border:0;border-radius:12px;padding:24px;box-shadow:0 20px 60px #0003;color:var(--text)";
@@ -177,7 +195,7 @@
 
                 <div class="form-group">
                     <label for="doador-email">E-mail</label>
-                    <input id="doador-email" name="email" type="email" maxlength="100">
+                    <input id="doador-email" name="email" type="email" maxlength="100" required>
                 </div>
 
                 <div class="form-group">
@@ -192,6 +210,13 @@
                         <option value="PESSOA_FISICA">Pessoa física</option>
                         <option value="EMPRESA/INSTITUICAO">Empresa / instituição</option>
                     </select>
+                </div>
+
+                <div class="form-group full">
+                    <label>
+                        <input type="checkbox" name="confirmacao" required>
+                        Confirmo que os dados do doador foram conferidos.
+                    </label>
                 </div>
 
                 <div class="form-group full" id="doador-form-aviso" role="status" aria-live="polite"></div>
@@ -223,6 +248,15 @@
 
         const form = dialog.querySelector("#novo-doador");
 
+        if (doador) {
+            dialog.querySelector("h2").textContent = "Editar doador";
+            form.elements.nome.value = doador.nome || "";
+            form.elements.email.value = doador.email || "";
+            form.elements.telefone.value = doador.telefone || "";
+            form.elements.tipo_doador.value = doador.tipo_doador || "";
+            form.querySelector('[type="submit"]').textContent = "Salvar alterações";
+        }
+
         form.addEventListener("submit", async function (event) {
             event.preventDefault();
 
@@ -239,8 +273,8 @@
                     tipo_doador: form.elements.tipo_doador.value
                 };
 
-                await BancoAuth.api(API_PATH, {
-                    method: "POST",
+                await BancoAuth.api(doador ? `${API_PATH}/${doador.id_doador}` : API_PATH, {
+                    method: doador ? "PUT" : "POST",
                     body: JSON.stringify(dados)
                 });
 
@@ -261,6 +295,21 @@
         }, { once: true });
 
         dialog.showModal();
+    }
+
+    async function removerDoador(doador) {
+        if (!window.confirm(`Remover o doador ${doador.nome}?`)) {
+            return;
+        }
+
+        try {
+            await BancoAuth.api(`${API_PATH}/${doador.id_doador}`, {
+                method: "DELETE"
+            });
+            await carregar();
+        } catch (error) {
+            exibirAviso(error.message, true);
+        }
     }
 
     if (busca) {

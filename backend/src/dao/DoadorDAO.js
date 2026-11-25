@@ -7,10 +7,26 @@ const TIPOS_DOADOR = ["EMPRESA/INSTITUICAO", "PESSOA_FISICA"];
 class DoadorDAO {
 
     validar(doador) {
-        if (!doador.nome || doador.nome.trim() === "" ||
-            !doador.email || doador.email.trim() === "") {
+        if (!doador.nome || !doador.nome.trim()) {
+            const erro = new Error("O nome do doador é obrigatório.");
+            erro.status = 400;
+            throw erro;
+        }
 
-            const erro = new Error("Nome e e-mail do doador são obrigatórios.");
+        if (!doador.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(doador.email.trim())) {
+            const erro = new Error("Informe um e-mail válido para o doador.");
+            erro.status = 400;
+            throw erro;
+        }
+
+        if (doador.nome.trim().length > 100 || doador.email.trim().length > 100) {
+            const erro = new Error("Nome e e-mail devem ter no máximo 100 caracteres.");
+            erro.status = 400;
+            throw erro;
+        }
+
+        if (doador.telefone && doador.telefone.trim().length > 20) {
+            const erro = new Error("O telefone deve ter no máximo 20 caracteres.");
             erro.status = 400;
             throw erro;
         }
@@ -38,6 +54,18 @@ class DoadorDAO {
         return lista;
     }
 
+    async buscarPorId(id) {
+        const [doadores] = await pool.execute(
+            `SELECT id_doador, nome, email, telefone, tipo_doador
+             FROM Doador
+             WHERE id_doador = ?
+             LIMIT 1`,
+            [id]
+        );
+
+        return doadores[0] || null;
+    }
+
     async criar(doador) {
         this.validar(doador);
 
@@ -59,6 +87,29 @@ class DoadorDAO {
         );
 
         return resultado.insertId;
+    }
+
+    async atualizar(id, doador) {
+        this.validar(doador);
+
+        const telefone = doador.telefone?.trim() || null;
+        const [resultado] = await pool.execute(
+            `UPDATE Doador
+             SET nome = ?, email = ?, telefone = ?, tipo_doador = ?
+             WHERE id_doador = ?`,
+            [doador.nome.trim(), doador.email.trim(), telefone, doador.tipo_doador, id]
+        );
+
+        return resultado.affectedRows > 0;
+    }
+
+    async excluir(id) {
+        const [resultado] = await pool.execute(
+            "DELETE FROM Doador WHERE id_doador = ?",
+            [id]
+        );
+
+        return resultado.affectedRows > 0;
     }
 }
 

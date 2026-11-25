@@ -80,6 +80,7 @@
                                 id="responsavel"
                                 name="responsavel"
                                 placeholder="Nome completo"
+                                maxlength="200"
                                 required
                             >
                         </div>
@@ -91,20 +92,29 @@
                                 id="cpf"
                                 name="cpf"
                                 placeholder="000.000.000-00"
+                                maxlength="14"
+                                pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
                                 required
                             >
                         </div>
 
                         <div class="form-group">
                             <label for="integrantes">Número de integrantes</label>
-                            <input
-                                type="number"
-                                id="integrantes"
-                                name="integrantes"
-                                placeholder="Quantidade de pessoas"
-                                min="1"
-                                required
-                            >
+                            <select id="integrantes" name="integrantes" required>
+                                <option value="">Selecione a quantidade</option>
+                                <option value="1">1 integrante</option>
+                                <option value="2">2 integrantes</option>
+                                <option value="3">3 integrantes</option>
+                                <option value="4">4 integrantes</option>
+                                <option value="5">5 integrantes</option>
+                                <option value="6">6 integrantes</option>
+                                <option value="7">7 integrantes</option>
+                                <option value="8">8 integrantes</option>
+                                <option value="9">9 integrantes</option>
+                                <option value="10">10 integrantes</option>
+                                <option value="mais">Mais de 10</option>
+                            </select>
+                            <input id="integrantes-exato" type="number" min="11" placeholder="Informe a quantidade exata" hidden>
                         </div>
 
                         <div class="form-group">
@@ -114,6 +124,7 @@
                                 id="telefone"
                                 name="telefone"
                                 placeholder="(00) 00000-0000"
+                                maxlength="20"
                             >
                         </div>
 
@@ -124,8 +135,16 @@
                                 id="endereco"
                                 name="endereco"
                                 placeholder="Rua, número, bairro e cidade"
+                                maxlength="260"
                                 required
                             >
+                        </div>
+
+                        <div class="form-group full">
+                            <label>
+                                <input type="checkbox" name="confirmacao" required>
+                                Confirmo que os dados da família foram conferidos.
+                            </label>
                         </div>
 
                     </div>

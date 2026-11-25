@@ -1,20 +1,52 @@
+(function () {
+    const API_HOST = window.location.hostname || "localhost";
+    const API_BASE = `http://${API_HOST}:3000/api`;
 
-(() => {
-
-    const API_BASE = "http://localhost:3000/api";
-    const TOKEN_KEY = "bancoSolidarioToken";
     const USER_KEY = "bancoSolidarioUsuario";
+    const LOGIN_KEY = "bancoSolidarioLogado";
+
+    function obterCookie(nome) {
+        const cookies = document.cookie.split(";");
+        const procurado = nome + "=";
+
+        for (const item of cookies) {
+            const cookie = item.trim();
+
+            if (cookie.startsWith(procurado)) {
+                const valor = cookie.slice(procurado.length);
+
+                return decodeURIComponent(valor);
+            }
+        }
+
+        return null;
+    }
+
+    function salvarCookie(nome, valor) {
+        let seguro = "";
+
+        if (window.location.protocol === "https:") {
+            seguro = "; Secure";
+        }
+
+        document.cookie = `${nome}=${encodeURIComponent(valor)}; Max-Age=28800; Path=/; SameSite=Lax${seguro}`;
+    }
+
+    function limparSessao() {
+        let seguro = "";
+
+        if (window.location.protocol === "https:") {
+            seguro = "; Secure";
+        }
+
+        document.cookie = `${USER_KEY}=; Max-Age=0; Path=/; SameSite=Lax${seguro}`;
+        document.cookie = `${LOGIN_KEY}=; Max-Age=0; Path=/; SameSite=Lax${seguro}`;
+    }
 
     async function api(path, options = {}) {
-        const token = localStorage.getItem(TOKEN_KEY);
-
         const headers = {
             "Content-Type": "application/json"
         };
-
-        if (token) {
-            headers.Authorization = "Bearer " + token;
-        }
 
         if (options.headers) {
             Object.assign(headers, options.headers);
@@ -22,10 +54,13 @@
 
         const response = await fetch(API_BASE + path, {
             ...options,
+            credentials: "include",
             headers: headers
         });
 
-        const data = await response.json().catch(() => ({}));
+        const data = await response.json().catch(function () {
+            return {};
+        });
 
         if (!response.ok) {
             throw new Error(
@@ -49,21 +84,34 @@
     }
 
     function salvarSessao(data) {
-        localStorage.setItem(TOKEN_KEY, data.token);
-        localStorage.setItem(USER_KEY, JSON.stringify(data.usuario));
+        const usuario = JSON.stringify(data.usuario);
+
+        salvarCookie(USER_KEY, usuario);
+        salvarCookie(LOGIN_KEY, "true");
     }
 
     function adicionarControlesDeSenha() {
+        const olho = `
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+        `;
 
-        const olho = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
-
-        const olhoFechado = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m3 3 18 18"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.8"></path><path d="M6.2 6.2C3.5 8.1 2 12 2 12s3.6 7 10 7c1.2 0 2.3-.2 3.3-.6"></path></svg>';
+        const olhoFechado = `
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="m3 3 18 18"></path>
+                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+                <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.8"></path>
+                <path d="M6.2 6.2C3.5 8.1 2 12 2 12s3.6 7 10 7c1.2 0 2.3-.2 3.3-.6"></path>
+            </svg>
+        `;
 
         const campos = document.querySelectorAll('input[type="password"]');
 
-        campos.forEach(function(input) {
-
+        for (const input of campos) {
             const campo = document.createElement("div");
+
             campo.className = "password-field";
 
             input.parentNode.insertBefore(campo, input);
@@ -78,13 +126,12 @@
             botao.title = "Mostrar senha";
             botao.innerHTML = olho;
 
-            botao.addEventListener("click", function() {
-
+            botao.addEventListener("click", function () {
                 let mostrar = false;
 
                 if (input.type === "password") {
-                    mostrar = true;
                     input.type = "text";
+                    mostrar = true;
                 } else {
                     input.type = "password";
                 }
@@ -105,11 +152,10 @@
             });
 
             campo.appendChild(botao);
-        });
+        }
     }
 
     function atualizarPerfil(usuario) {
-
         const perfil = document.querySelector(".profile");
 
         if (!perfil || !usuario) {
@@ -145,22 +191,21 @@
         }
 
         if (tipo) {
-            tipo.textContent = usuario.perfil || tipos[usuario.tipo] || usuario.tipo || "Conta";
+            tipo.textContent = usuario.email || "";
+
+            perfil.title = usuario.perfil || tipos[usuario.tipo] || usuario.tipo || "Conta";
         }
     }
 
     async function sair() {
-
         try {
             await api("/auth/logout", {
                 method: "POST"
             });
         } catch (erro) {
-
         }
 
-        localStorage.removeItem(TOKEN_KEY);
-        localStorage.removeItem(USER_KEY);
+        limparSessao();
 
         window.location.href = "login.html";
     }
@@ -171,58 +216,47 @@
         api: api,
         mensagem: mensagem,
         salvarSessao: salvarSessao,
-        TOKEN_KEY: TOKEN_KEY,
         USER_KEY: USER_KEY,
         sair: sair
     };
 
     const botoesSair = document.querySelectorAll(".auth-logout");
 
-    botoesSair.forEach(function(botao) {
-
-        botao.addEventListener("click", function(event) {
+    for (const botao of botoesSair) {
+        botao.addEventListener("click", function (event) {
             event.preventDefault();
             sair();
         });
-
-    });
+    }
 
     if (document.body.classList.contains("auth-protected")) {
+        const logado = obterCookie(LOGIN_KEY);
 
-        const token = localStorage.getItem(TOKEN_KEY);
-
-        if (!token) {
+        if (logado !== "true") {
             window.location.replace("login.html");
             return;
         }
 
         try {
-            const usuarioSalvo = JSON.parse(
-                localStorage.getItem(USER_KEY) || "null"
-            );
+            const cookieUsuario = obterCookie(USER_KEY);
+            const usuarioSalvo = JSON.parse(cookieUsuario || "null");
 
             atualizarPerfil(usuarioSalvo);
 
         } catch (erro) {
-
         }
 
-        api("/auth/me").then(function(data) {
+        api("/auth/me")
+            .then(function (data) {
+                const usuario = JSON.stringify(data.usuario);
 
-            localStorage.setItem(
-                USER_KEY,
-                JSON.stringify(data.usuario)
-            );
+                salvarCookie(USER_KEY, usuario);
+                atualizarPerfil(data.usuario);
+            })
+            .catch(function (erro) {
+                limparSessao();
 
-            atualizarPerfil(data.usuario);
-
-        }).catch(function(erro) {
-
-            localStorage.removeItem(TOKEN_KEY);
-            localStorage.removeItem(USER_KEY);
-
-            window.location.replace("login.html");
-        });
+                window.location.replace("login.html");
+            });
     }
-
 })();

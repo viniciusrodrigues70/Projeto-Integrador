@@ -31,9 +31,16 @@
 
             if (resposta.linkDesenvolvimento) {
                 const link = document.createElement("a");
+                const token = new URL(resposta.linkDesenvolvimento).searchParams.get("token");
+                const paginaRedefinicao = new URL(
+                    "redefinir-senha.html",
+                    window.location.href
+                );
 
-                link.href = resposta.linkDesenvolvimento;
-                link.textContent = "Abrir link de redefinição (modo de desenvolvimento)";
+                paginaRedefinicao.searchParams.set("token", token);
+
+                link.href = paginaRedefinicao.href;
+                link.textContent = "Abrir link para redefinir a senha";
                 link.className = "auth-dev-link";
 
                 status.replaceChildren(
