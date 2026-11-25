@@ -139,32 +139,28 @@ BANCO-DE-ALIMENTOS/
 │   │   ├── middlewares/
 │   │   └── server.js
 │   │
-│   ├── .env.example
-│   └── package.json
+│   └── .env.example
+│   
 │
 ├── frontend/
 │   ├── public/
 │   │   ├── css/
 │   │   ├── js/
-│   │   ├── pages/
-│   │   └── assets/
-│   │
+│   │   └── paginas/
+│   │   
 │   └── index.html
 │
 ├── banco/
-│   ├── DER.md
-│   ├── modelo-logico.pdf
-│   ├── criacao.sql
-│   └── povoamento.sql
-│
-├── diagramas/
-│   └── diagrama-classes.png
+│   ├── DER.png
+│   ├── Projetor Integrador-lógico.pdf
+│   └── criacao.sql
 │
 ├── diario/
-│   ├── integrante-1.md
-│   ├── integrante-2.md
-│   └── integrante-3.md
+│   ├── marcio-daniel.md
+│   ├── vinicius-rodrigues.md
+│   └── vitor-calheiros.md
 │
+├── package.json
 ├── USO_DE_IA.md
 ├── README.md
 └── .gitignore
@@ -174,9 +170,9 @@ BANCO-DE-ALIMENTOS/
 
 | Integrante | Responsabilidade |
 |---|---|
-| [Vinícius Rodrigues] | Cadastro de Lotes, Produtos e Item Entrega |
-| [Vitor Calheiros] | Cadastro de Usuários e Doadores |
-| [Márcio Daniel] | Cadastro de Famílias e Entrega Cesta |
+| [Vinícius Rodrigues da Silva] | Cadastro de Lotes, Produtos e Item Entrega |
+| [Vitor Miguel Rocha Calheiros] | Cadastro de Usuários e Doadores |
+| [Márcio Daniel Torres Lima] | Cadastro de Famílias e Entrega Cesta |
 
 Todos os integrantes participam do desenvolvimento e da integração das funcionalidades do sistema.
 
@@ -201,10 +197,9 @@ git clone URL_DO_REPOSITORIO
 
 ### 2. Configurar o banco de dados
 
-Abra o MySQL Workbench e execute os arquivos SQL na seguinte ordem:
+Abra o MySQL Workbench e execute o seguinte arquivo SQL:
 
-1. `banco/criacao.sql`
-2. `banco/povoamento.sql`
+ •`banco/criacao.sql`
 
 Isso criará a estrutura do banco e inserirá os registros iniciais.
 
@@ -270,7 +265,6 @@ O desenvolvimento do projeto será acompanhado por meio de:
 
 - **README.md:** documentação geral do sistema.
 - **DER e modelo lógico:** documentação da estrutura do banco de dados.
-- **Diagrama de Classes:** representação da arquitetura orientada a objetos.
 - **Diários de Bordo:** registros individuais das atividades semanais.
 - **USO_DE_IA.md:** registro da utilização de ferramentas de Inteligência Artificial.
 - **GitHub:** histórico de commits e acompanhamento das tarefas.
@@ -280,7 +274,7 @@ O desenvolvimento do projeto será acompanhado por meio de:
 **Instituição:** Instituto Federal de Alagoas (IFAL)  
 **Campus:** Maceió  
 **Curso:** Técnico em Desenvolvimento de Sistemas  
-**Disciplinas:** Programação Orientada a Objetos, Fundamentos de Bancos de Dados e Programação Web.  
+**Disciplinas:** Programação Orientada a Objetos, Bancos de Dados e Programação Web II.  
 **Período:** 4º Bimestre de 2026  
 **Projeto:** Banco de Alimentos  
 **Tema:** 10
