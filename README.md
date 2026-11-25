@@ -174,9 +174,9 @@ BANCO-DE-ALIMENTOS/
 
 | Integrante | Responsabilidade |
 |---|---|
-| [Vinícius Rodrigues] | Cadastro de Doadores |
-| [Vitor Calheiros] | Cadastro de Produtos |
-| [Márcio Daniel] | Cadastro de Famílias |
+| [Vinícius Rodrigues] | Cadastro de Lotes, Produtos e Item Entrega |
+| [Vitor Calheiros] | Cadastro de Usuários e Doadores |
+| [Márcio Daniel] | Cadastro de Famílias e Entrega Cesta |
 
 Todos os integrantes participam do desenvolvimento e da integração das funcionalidades do sistema.
 
