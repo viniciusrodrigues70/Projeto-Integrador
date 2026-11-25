@@ -189,16 +189,15 @@ insert into Item_Entrega (id_entrega, id_produto, quantidade) values
     ((select id_entrega from Entrega_cesta where id_familia = 3 and data_entrega = '2026-10-03'), 9, 18),
     ((select id_entrega from Entrega_cesta where id_familia = 3 and data_entrega = '2026-10-03'), 10, 14);
 
-CREATE INDEX idx_entrega_familia_data
-    ON Entrega_cesta (id_familia, data_entrega);
+CREATE VIEW Estoque_Produto AS
+SELECT p.id_produto, p.nome, p.categoria, COALESCE(SUM(l.qtd_atual), 0) AS quantidade
+FROM Produto AS p
+LEFT JOIN Lote AS l
+    ON p.id_produto = l.id_produto
+GROUP BY
+    p.id_produto,
+    p.nome,
+    p.categoria;
 
-CREATE INDEX idx_lote_produto_validade
-    ON Lote (id_produto, validade, id_lote);
 
-
-UPDATE Produto AS p
-SET p.quantidade = (
-    SELECT COALESCE(SUM(l.qtd_atual), 0)
-    FROM Lote AS l
-    WHERE l.id_produto = p.id_produto
-);
+SELECT * FROM Estoque_Produto;
