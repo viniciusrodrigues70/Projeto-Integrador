@@ -31,26 +31,11 @@
         const colunas = relatorio[2];
 
         const corpo = document.getElementById(id);
+        const paginar = BancoAuth.criarPaginador(corpo, colunas.length);
 
         const linhas = await BancoAuth.api(rota);
 
-        corpo.replaceChildren();
-
-        if (linhas.length === 0) {
-            const linha = document.createElement("tr");
-            const celula = document.createElement("td");
-
-            celula.colSpan = colunas.length;
-            celula.className = "empty-state";
-            celula.textContent = "Nenhum registro para o período.";
-
-            linha.appendChild(celula);
-            corpo.appendChild(linha);
-
-            return;
-        }
-
-        for (const item of linhas) {
+        paginar(linhas, function (item) {
             const linha = document.createElement("tr");
 
             for (const coluna of colunas) {
@@ -62,7 +47,7 @@
             }
 
             corpo.appendChild(linha);
-        }
+        }, "Nenhum registro para o período.");
     }
 
     async function carregarTodos() {

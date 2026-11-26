@@ -10,6 +10,7 @@
     const periodo = document.querySelector(".toolbar select");
     const numeros = document.querySelectorAll(".stats .card .stat-number");
     const panel = tbody.closest(".panel");
+    const paginar = BancoAuth.criarPaginador(tbody, 7);
 
     let entregas = [];
 
@@ -129,28 +130,13 @@
             }
         }
 
-        tbody.replaceChildren();
-
-        if (filtradas.length === 0) {
-            const tr = document.createElement("tr");
-            const td = document.createElement("td");
-
-            td.colSpan = 7;
-            td.className = "empty-state";
-            td.textContent = "Nenhuma entrega corresponde aos filtros.";
-
-            tr.appendChild(td);
-            tbody.appendChild(tr);
-
-        } else {
-            for (let i = 0; i < filtradas.length; i++) {
-                const entrega = filtradas[i];
+        paginar(filtradas, function (entrega, i) {
                 const tr = document.createElement("tr");
 
                 const valores = [
                     entrega.id_entrega ?? i + 1,
                     entrega.familia,
-                    entrega.data_entrega,
+                    BancoAuth.formatarData(entrega.data_entrega),
                     entrega.produto,
                     entrega.quantidade,
                     entrega.observacao,
@@ -176,8 +162,7 @@
                 }
 
                 tbody.appendChild(tr);
-            }
-        }
+        }, "Nenhuma entrega corresponde aos filtros.");
 
         if (numeros[0]) {
             numeros[0].textContent = String(filtradas.length);

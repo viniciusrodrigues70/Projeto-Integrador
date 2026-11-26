@@ -5,7 +5,7 @@ router.use(require("../middlewares/authMiddleware"));
 
 
 router.get("/", EntregaController.listar);
-router.get("/familia/:id/historico", EntregaController.historicoFamilia);
+router.get("/familia/:id", EntregaController.historicoFamilia);
 router.post("/", EntregaController.registrar);
 
 

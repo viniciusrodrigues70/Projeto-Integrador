@@ -83,6 +83,198 @@
         element.classList.toggle("success", !erro);
     }
 
+    function formatarData(valor) {
+        if (!valor) {
+            return "—";
+        }
+
+        const texto = valor instanceof Date
+            ? valor.toISOString().slice(0, 10)
+            : String(valor).trim();
+        const dataISO = texto.match(/^(\d{4})-(\d{2})-(\d{2})/);
+
+        if (dataISO) {
+            return `${dataISO[3]}/${dataISO[2]}/${dataISO[1].slice(-2)}`;
+        }
+
+        const dataBR = texto.match(/^(\d{2})\/(\d{2})\/(\d{2,4})/);
+
+        if (dataBR) {
+            return `${dataBR[1]}/${dataBR[2]}/${dataBR[3].slice(-2)}`;
+        }
+
+        return texto;
+    }
+
+    function criarPaginador(tbody, colunas) {
+        const tabela = tbody.closest(".table-container");
+        const controles = document.createElement("div");
+        const anterior = document.createElement("button");
+        const informacao = document.createElement("span");
+        const proxima = document.createElement("button");
+        let registros = [];
+        let desenharRegistro = function () {};
+        let mensagemVazia = "Nenhum registro encontrado.";
+        let pagina = 0;
+        let modoLinhas = false;
+
+        controles.className = "pagination";
+        anterior.type = "button";
+        anterior.className = "btn btn-secondary";
+        anterior.textContent = "← Anterior";
+        informacao.setAttribute("aria-live", "polite");
+        proxima.type = "button";
+        proxima.className = "btn btn-secondary";
+        proxima.textContent = "Próxima →";
+
+        controles.append(anterior, informacao, proxima);
+        tabela?.after(controles);
+
+        function desenhar() {
+            if (modoLinhas) {
+                const todasLinhas = Array.from(tbody.rows);
+                const linhaVazia = todasLinhas.find(function (linha) {
+                    return linha.querySelector(".empty-state");
+                });
+                const linhas = todasLinhas.filter(function (linha) {
+                    return linha !== linhaVazia;
+                });
+                const filtradas = linhas.filter(function (linha) {
+                    return linha.dataset.filtrado !== "nao";
+                });
+                const totalPaginasLinhas = Math.max(1, Math.ceil(filtradas.length / 10));
+                pagina = Math.min(pagina, totalPaginasLinhas - 1);
+                const inicioLinhas = pagina * 10;
+                const fimLinhas = inicioLinhas + 10;
+
+                linhas.forEach(function (linha) {
+                    const indice = filtradas.indexOf(linha);
+                    linha.hidden = indice === -1 || indice < inicioLinhas || indice >= fimLinhas;
+                });
+
+                if (filtradas.length === 0) {
+                    const linha = linhaVazia || document.createElement("tr");
+                    const celula = linha.querySelector("td") || document.createElement("td");
+                    celula.colSpan = colunas;
+                    celula.className = "empty-state";
+                    celula.textContent = "Nenhum registro corresponde à busca.";
+                    linha.replaceChildren(celula);
+                    linha.hidden = false;
+                    if (!linhaVazia) tbody.appendChild(linha);
+                } else if (linhaVazia) {
+                    linhaVazia.remove();
+                }
+
+                informacao.textContent = filtradas.length
+                    ? `${inicioLinhas + 1}–${Math.min(fimLinhas, filtradas.length)} de ${filtradas.length}`
+                    : "0 registros";
+                anterior.disabled = pagina === 0;
+                proxima.disabled = pagina >= totalPaginasLinhas - 1;
+                controles.hidden = filtradas.length === 0;
+                return;
+            }
+
+            const totalPaginas = Math.max(1, Math.ceil(registros.length / 10));
+            pagina = Math.min(pagina, totalPaginas - 1);
+            tbody.replaceChildren();
+
+            const inicio = pagina * 10;
+            const visiveis = registros.slice(inicio, inicio + 10);
+
+            if (registros.length === 0) {
+                const linha = document.createElement("tr");
+                const celula = document.createElement("td");
+                celula.colSpan = colunas;
+                celula.className = "empty-state";
+                celula.textContent = mensagemVazia;
+                linha.appendChild(celula);
+                tbody.appendChild(linha);
+            } else {
+                visiveis.forEach(function (registro, indice) {
+                    desenharRegistro(registro, inicio + indice);
+                });
+            }
+
+            const fim = Math.min(inicio + visiveis.length, registros.length);
+            informacao.textContent = registros.length
+                ? `${inicio + 1}–${fim} de ${registros.length}`
+                : "0 registros";
+            anterior.disabled = pagina === 0;
+            proxima.disabled = pagina >= totalPaginas - 1;
+            controles.hidden = registros.length === 0;
+        }
+
+        anterior.addEventListener("click", function () {
+            if (pagina > 0) {
+                pagina--;
+                desenhar();
+            }
+        });
+
+        proxima.addEventListener("click", function () {
+            const totalRegistros = modoLinhas
+                ? Array.from(tbody.rows).filter(function (linha) {
+                    return !linha.querySelector(".empty-state") && linha.dataset.filtrado !== "nao";
+                }).length
+                : registros.length;
+
+            if ((pagina + 1) * 10 < totalRegistros) {
+                pagina++;
+                desenhar();
+            }
+        });
+
+        const paginar = function (lista, renderizar, vazio) {
+            modoLinhas = false;
+            registros = lista;
+            desenharRegistro = renderizar;
+            mensagemVazia = vazio || "Nenhum registro encontrado.";
+            pagina = 0;
+            desenhar();
+        };
+
+        paginar.aplicar = function () {
+            modoLinhas = true;
+            pagina = 0;
+            desenhar();
+        };
+
+        paginar.atualizar = function () {
+            desenhar();
+        };
+
+        paginar.reiniciar = function () {
+            pagina = 0;
+            desenhar();
+        };
+
+        return paginar;
+    }
+
+    function aplicarMascara(event) {
+        const campo = event.target;
+        const nome = campo.name || "";
+        const id = campo.id || "";
+        const digitos = campo.value.replace(/\D/g, "");
+
+        if (nome === "cpf" || nome === "cpf_responsavel" || id === "cpf") {
+            campo.maxLength = 14;
+            campo.inputMode = "numeric";
+            campo.value = digitos.slice(0, 11)
+                .replace(/^(\d{3})(\d)/, "$1.$2")
+                .replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3")
+                .replace(/\.(\d{3})(\d)/, ".$1-$2");
+        } else if (nome === "telefone" || id === "telefone" || id === "doador-telefone") {
+            campo.maxLength = 20;
+            campo.inputMode = "tel";
+            campo.value = digitos.slice(0, 11)
+                .replace(/^(\d{2})(\d)/, "($1) $2")
+                .replace(/(\d{4,5})(\d{4})$/, "$1-$2");
+        }
+    }
+
+    document.addEventListener("input", aplicarMascara);
+
     function salvarSessao(data) {
         const usuario = JSON.stringify(data.usuario);
 
@@ -214,6 +406,8 @@
 
     window.BancoAuth = {
         api: api,
+        formatarData: formatarData,
+        criarPaginador: criarPaginador,
         mensagem: mensagem,
         salvarSessao: salvarSessao,
         USER_KEY: USER_KEY,

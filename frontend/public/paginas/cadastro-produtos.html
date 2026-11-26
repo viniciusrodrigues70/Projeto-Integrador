@@ -128,9 +128,22 @@
                                 id="quantidade"
                                 name="quantidade"
                                 value="0"
-                                readonly
+                                min="0"
+                                step="1"
                             >
-                            <small>O estoque será atualizado ao registrar doações.</small>
+                            <small>Para quantidade inicial, informe também o doador e a validade do lote.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="doador-inicial">Doador do estoque inicial</label>
+                            <select id="doador-inicial" name="id_doador">
+                                <option value="">Selecione um doador</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="validade-inicial">Validade do estoque inicial</label>
+                            <input type="date" id="validade-inicial" name="validade">
                         </div>
 
                         <div class="form-group full">

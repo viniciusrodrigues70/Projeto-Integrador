@@ -65,11 +65,97 @@ module.exports = {
   },
 
   async criarProduto(req, res, next) {
+    let connection;
+
     try {
-      await produtoDAO.inserir(req.body);
+      const quantidade = Number(req.body.quantidade || 0);
+
+      if (!Number.isInteger(quantidade) || quantidade < 0) {
+        return res.status(400).json({
+          mensagem: "A quantidade inicial deve ser um número inteiro igual ou maior que zero."
+        });
+      }
+
+      if (quantidade === 0) {
+        await produtoDAO.inserir({ ...req.body, quantidade: 0 });
+        return res.status(201).json({ mensagem: "Produto cadastrado." });
+      }
+
+      const doadorId = Number(req.body.id_doador);
+      const validade = req.body.validade;
+
+      if (!Number.isInteger(doadorId) || doadorId < 1) {
+        return res.status(400).json({ mensagem: "Selecione o doador do estoque inicial." });
+      }
+
+      const dataValidade = typeof validade === "string"
+        ? new Date(validade + "T00:00:00Z")
+        : null;
+
+      if (
+        !dataValidade ||
+        Number.isNaN(dataValidade.getTime()) ||
+        dataValidade.toISOString().slice(0, 10) !== validade
+      ) {
+        return res.status(400).json({ mensagem: "Informe a validade do estoque inicial." });
+      }
+
+      connection = await pool.getConnection();
+      await connection.beginTransaction();
+
+      const [hojeResultado] = await connection.execute(
+        "SELECT DATE_FORMAT(CURDATE(), '%Y-%m-%d') AS hoje"
+      );
+      const hoje = hojeResultado[0].hoje;
+
+      if (validade < hoje) {
+        const erro = new Error("A validade do estoque inicial não pode estar vencida.");
+        erro.status = 400;
+        throw erro;
+      }
+
+      const [doadores] = await connection.execute(
+        "SELECT id_doador FROM Doador WHERE id_doador = ? FOR UPDATE",
+        [doadorId]
+      );
+
+      if (doadores.length === 0) {
+        const erro = new Error("Doador não encontrado.");
+        erro.status = 404;
+        throw erro;
+      }
+
+      const [produto] = await produtoDAO.inserir(
+        { ...req.body, quantidade: 0 },
+        connection
+      );
+
+      await connection.execute(
+        `INSERT INTO Lote (
+          validade, qtd_inicial, qtd_atual, data_recebimento, id_produto, id_doador
+        ) VALUES (?, ?, ?, ?, ?, ?)`,
+        [validade, quantidade, quantidade, hoje, produto.insertId, doadorId]
+      );
+
+      await connection.execute(
+        "UPDATE Produto SET quantidade = ? WHERE id_produto = ?",
+        [quantidade, produto.insertId]
+      );
+
+      await connection.commit();
       res.status(201).json({ mensagem: "Produto cadastrado." });
     } catch (erro) {
+      if (connection) {
+        try {
+          await connection.rollback();
+        } catch (erroRollback) {
+        }
+      }
       next(erro);
+    } finally {
+      if (connection) {
+        connection.release();
+      }
     }
   },
 

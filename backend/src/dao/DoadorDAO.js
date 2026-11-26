@@ -38,6 +38,28 @@ class DoadorDAO {
         }
     }
 
+    async validarEmailUnico(email, id = null) {
+        let sql = `SELECT id_doador
+            FROM Doador
+            WHERE LOWER(email) = LOWER(?)`;
+        const valores = [email.trim()];
+
+        if (id !== null) {
+            sql += " AND id_doador <> ?";
+            valores.push(id);
+        }
+
+        sql += " LIMIT 1";
+
+        const [doadores] = await pool.execute(sql, valores);
+
+        if (doadores.length > 0) {
+            const erro = new Error("Já existe um doador cadastrado com esse e-mail.");
+            erro.status = 409;
+            throw erro;
+        }
+    }
+
     async listar() {
         const [doadores] = await pool.execute(
             `SELECT id_doador, nome, email, telefone, tipo_doador
@@ -68,6 +90,7 @@ class DoadorDAO {
 
     async criar(doador) {
         this.validar(doador);
+        await this.validarEmailUnico(doador.email);
 
         let telefone = null;
 
@@ -91,6 +114,7 @@ class DoadorDAO {
 
     async atualizar(id, doador) {
         this.validar(doador);
+        await this.validarEmailUnico(doador.email, id);
 
         const telefone = doador.telefone?.trim() || null;
         const [resultado] = await pool.execute(

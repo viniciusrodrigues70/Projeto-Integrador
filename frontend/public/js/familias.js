@@ -1,6 +1,7 @@
 (function () {
     const tbody = document.querySelector(".table-container tbody");
     const busca = document.querySelector('.toolbar input[type="search"]');
+    const paginar = BancoAuth.criarPaginador(tbody, 7);
 
     if (!tbody) {
         return;
@@ -25,7 +26,9 @@
     function filtrar() {
         const termo = normalizar(busca?.value);
         for (const linha of tbody.rows) {
-            linha.hidden = !normalizar(linha.textContent).includes(termo);
+            const corresponde = normalizar(linha.textContent).includes(termo);
+            linha.dataset.filtrado = corresponde ? "sim" : "nao";
+            linha.hidden = !corresponde;
         }
     }
 
@@ -105,6 +108,7 @@
             }
 
             filtrar();
+            paginar.aplicar();
 
         } catch (error) {
             aviso.textContent = `Não foi possível carregar as famílias: ${error.message}`;
@@ -112,7 +116,10 @@
         }
     }
 
-    busca?.addEventListener("input", filtrar);
+    busca?.addEventListener("input", function () {
+        filtrar();
+        paginar.reiniciar();
+    });
 
     const linkCadastro = document.querySelector('.toolbar a[href*="cadastro-familias"]');
     linkCadastro?.addEventListener("click", function (event) {
@@ -261,7 +268,7 @@
                 const historico = [];
 
                 for (const entrega of entregas) {
-                    let texto = String(entrega.data_entrega).slice(0, 10);
+                    let texto = BancoAuth.formatarData(entrega.data_entrega);
 
                     texto += " — ";
                     texto += entrega.itens || "Itens não detalhados";

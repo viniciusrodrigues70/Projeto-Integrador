@@ -9,6 +9,7 @@
     const busca = document.querySelector('.toolbar input[type="search"]');
     const total = document.querySelector(".stats .card .stat-number");
     const panel = tbody.closest(".panel");
+    const paginar = BancoAuth.criarPaginador(tbody, 6);
 
     let doadores = [];
 
@@ -65,22 +66,7 @@
             }
         }
 
-        tbody.replaceChildren();
-
-        if (filtrados.length === 0) {
-            const tr = document.createElement("tr");
-            const td = document.createElement("td");
-
-            td.colSpan = 6;
-            td.className = "empty-state";
-            td.textContent = "Nenhum doador corresponde à busca.";
-
-            tr.appendChild(td);
-            tbody.appendChild(tr);
-
-        } else {
-            for (let i = 0; i < filtrados.length; i++) {
-                const doador = filtrados[i];
+        paginar(filtrados, function (doador, i) {
                 const tr = document.createElement("tr");
 
                 const valores = [
@@ -129,8 +115,7 @@
                 acoes.append(editar, remover);
                 tr.appendChild(acoes);
                 tbody.appendChild(tr);
-            }
-        }
+        }, "Nenhum doador corresponde à busca.");
 
         if (total) {
             total.textContent = String(doadores.length);

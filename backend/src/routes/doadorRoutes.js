@@ -6,6 +6,7 @@ router.use(require("../middlewares/authMiddleware"));
 
 router.get("/", DoadorController.listar);
 router.post("/", DoadorController.criar);
-
+router.put("/:id", DoadorController.editar);
+router.delete("/:id", DoadorController.remover);
 
 module.exports = router;

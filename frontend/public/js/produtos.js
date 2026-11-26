@@ -4,7 +4,7 @@
     const aviso = document.createElement("div");
     const painel = tbody?.closest(".panel");
     const tabela = tbody?.closest(".table-container");
-    const linkNovo = document.querySelector('.toolbar a[href*="cadastro-produtos"]');
+    const paginar = tbody ? BancoAuth.criarPaginador(tbody, 7) : null;
     let produtos = [];
 
     if (!tbody) {
@@ -32,22 +32,7 @@
             ].join(" ")).includes(termo);
         });
 
-        tbody.replaceChildren();
-
-        if (filtrados.length === 0) {
-            const linha = document.createElement("tr");
-            const celula = document.createElement("td");
-            celula.colSpan = 7;
-            celula.className = "empty-state";
-            celula.textContent = produtos.length
-                ? "Nenhum produto corresponde à busca."
-                : "Nenhum produto cadastrado.";
-            linha.appendChild(celula);
-            tbody.appendChild(linha);
-            return;
-        }
-
-        for (const produto of filtrados) {
+        paginar(filtrados, function (produto) {
             const linha = document.createElement("tr");
             const valores = [
                 produto.id_produto,
@@ -84,7 +69,9 @@
             acoes.append(editar, remover);
             linha.appendChild(acoes);
             tbody.appendChild(linha);
-        }
+        }, produtos.length
+            ? "Nenhum produto corresponde à busca."
+            : "Nenhum produto cadastrado.");
     }
 
     async function carregar() {
@@ -186,10 +173,5 @@
     }
 
     busca?.addEventListener("input", desenhar);
-    linkNovo?.addEventListener("click", function (event) {
-        event.preventDefault();
-        abrirFormulario();
-    });
-
     carregar();
 })();

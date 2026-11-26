@@ -42,10 +42,10 @@ class ProdutoDAO {
     }
   }
 
-  async inserir(produto) {
+  async inserir(produto, conexao = database) {
     this.validar(produto);
 
-    return database.query(
+    return conexao.query(
       `INSERT INTO Produto (nome, descricao, peso, categoria, quantidade)
        VALUES (?, ?, ?, ?, ?)`,
       [

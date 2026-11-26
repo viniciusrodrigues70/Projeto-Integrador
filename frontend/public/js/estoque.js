@@ -186,6 +186,8 @@
     if (tabelas.length >= 2) {
         const corpoProdutos = tabelas[0].querySelector("tbody");
         const corpoLotes = tabelas[1].querySelector("tbody");
+        const paginarProdutos = BancoAuth.criarPaginador(corpoProdutos, 5);
+        const paginarLotes = BancoAuth.criarPaginador(corpoLotes, 8);
         const buscas = document.querySelectorAll('.toolbar input[type="search"]');
         const filtroSituacao = document.querySelector(".toolbar select");
 
@@ -201,18 +203,23 @@
                 const correspondeTexto = normalizar(linha.textContent).includes(normalizar(termo));
                 const correspondeSituacao = !situacao || normalizar(situacao) === "todas as situacoes" ||
                     normalizar(linha.cells[linha.cells.length - 1]?.textContent).includes(normalizar(situacao));
-                linha.hidden = !(correspondeTexto && correspondeSituacao);
+                const corresponde = correspondeTexto && correspondeSituacao;
+                linha.dataset.filtrado = corresponde ? "sim" : "nao";
+                linha.hidden = !corresponde;
             }
         }
 
         buscas[0]?.addEventListener("input", function () {
             filtrarTabela(corpoProdutos, buscas[0].value);
+            paginarProdutos.reiniciar();
         });
         buscas[1]?.addEventListener("input", function () {
             filtrarTabela(corpoLotes, buscas[1].value, filtroSituacao?.value);
+            paginarLotes.reiniciar();
         });
         filtroSituacao?.addEventListener("change", function () {
             filtrarTabela(corpoLotes, buscas[1]?.value, filtroSituacao.value);
+            paginarLotes.reiniciar();
         });
 
         corpoProdutos.replaceChildren();
@@ -317,6 +324,8 @@
 
                 filtrarTabela(corpoProdutos, buscas[0]?.value);
                 filtrarTabela(corpoLotes, buscas[1]?.value, filtroSituacao?.value);
+                paginarProdutos.aplicar();
+                paginarLotes.aplicar();
 
             } catch (error) {
                 const status = criarStatus(tabelas[0]);

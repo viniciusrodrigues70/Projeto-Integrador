@@ -4,8 +4,10 @@ const router = express.Router();
 router.use(require("../middlewares/authMiddleware"));
 
 
-router.get("/estoque/produtos", LoteController.listarEstoquePorProduto);
+router.get("/estoque", LoteController.consultarEstoque);
+router.get("/estoque/produtos", LoteController.consultarEstoque);
 router.get("/", LoteController.listar);
+router.post("/", LoteController.registrarDoacao);
 router.post("/doacoes", LoteController.registrarDoacao);
 
 
