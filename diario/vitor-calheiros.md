@@ -6,3 +6,4 @@
 - **18/11:** Desenvolvi o `AuthController.js`, o Model de Usuário, os arquivos `cadastro.js` e `auth.js`, além de realizar correções no `index.html`.  
 - **19/11:** Fiz a refatoração das páginas HTML para que os cadastros fiquem em pastas diferentes.   
 - **23/11** Reajustei corretamente as classes `Usuário`,`Produto`, `Item_entrega`, adicionei os models de `Lote.js` e `Doador.js`.  
+- **26/11** Ajustei o `Readme` para mostrar um usuário de acesso livre, além de corrigir as senhas dos usuários no `criacao.sql` para respeitarem o limite minímo de linhas (8 caracteres). 
