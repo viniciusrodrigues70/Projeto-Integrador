@@ -239,7 +239,11 @@ O frontend será aberto no navegador por meio de um endereço local.
 
 As páginas utilizarão JavaScript e Fetch API para realizar requisições ao backend.
 
-**Observação:** caso frontend e backend sejam executados em portas diferentes, será necessário configurar o CORS no Express para permitir a comunicação entre eles.
+**Observação:** caso frontend e backend sejam executados em portas diferentes, será necessário configurar o CORS no Express para permitir a comunicação entre eles.  
+
+### 6. Logar no sistema
+
+Utilize o email: `ZE@gmail.com` e a senha: `12345678`
 
 ## 🗄️ Modelagem do Banco de Dados
 
