@@ -23,16 +23,16 @@ Create table if not exists Doador(
 );
 
 insert into Usuario (nome, email,senha,tipo)
-values ('Zé', 'ZE@gmail.com', '123456', 'ADMINISTRADOR'),
-       ('Ana', "Ana@gmail.com", 'admin', 'ADMINISTRADOR'),
-       ('Carlos', 'carlos@gmail.com', 'C234', 'OPERADOR'),
-        ('Maria', 'maria@gmail.com', '3008', 'OPERADOR'),
-        ('Joao', 'joao@gmail.com', 'jKLMNP', 'OPERADOR'),
-        ('Pedro', 'pedro@gmail.com', 'YOI#e', 'OPERADOR'),
+values ('Zé', 'ZE@gmail.com', '12345678', 'ADMINISTRADOR'),
+       ('Ana', "Ana@gmail.com", 'admin123', 'ADMINISTRADOR'),
+       ('Carlos', 'carlos@gmail.com', 'C2346810', 'OPERADOR'),
+        ('Maria', 'maria@gmail.com', '30082009', 'OPERADOR'),
+        ('Joao', 'joao@gmail.com', 'jKLMNPor', 'OPERADOR'),
+        ('Pedro', 'pedro@gmail.com', 'YOI#e568', 'OPERADOR'),
         ('Julia', 'julia@gmail.com', 'Confusa234', 'OPERADOR'),
-        ('Lucas', 'lucas@gmail.com', '097lucas', 'OPERADOR'),
-        ('Fernanda', 'fernanda@gmail.com', 'Feh567', 'OPERADOR'),
-        ('Rafael', 'rafael@gmail.com', 'vasco67', 'OPERADOR');
+        ('Lucas', 'lucas@gmail.com', '097lucas1', 'OPERADOR'),
+        ('Fernanda', 'fernanda@gmail.com', 'Feh567rs', 'OPERADOR'),
+        ('Rafael', 'rafael@gmail.com', 'vasco6776', 'OPERADOR');
 
 insert into Doador(nome, email,telefone, tipo_doador) values 
 		('Vincente', 'V@gmail.com', '82 98100-0077', 'PESSOA_FISICA'),
